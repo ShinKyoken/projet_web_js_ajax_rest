@@ -8,13 +8,11 @@ body{
 }
 
 .uk-card{
-  opacity: 0.70;
+  opacity: 0.80;
 }
-
+img{
+  opacity:1;
+}
 textarea{
   resize:none;
-}
-
-label{
-  color:white;
 }
