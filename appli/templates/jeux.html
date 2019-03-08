@@ -56,4 +56,48 @@
         {% endfor %}
     </div>
   </div>
+  <div class="container uk-margin">
+    <form class="uk-form-horizontal uk-margin-large">
+
+    <div class="uk-margin">
+        <label class="uk-form-label" for="form-horizontal-text">Nom du Jeu</label>
+        <div class="uk-form-controls">
+            <input class="uk-input" id="form-horizontal-text" type="text" placeholder="Minecraft, League of Legends, ...">
+        </div>
+    </div>
+
+    <div class="uk-margin">
+        <label class="uk-form-label" for="form-horizontal-text">Genre du Jeu</label>
+        <div class="uk-form-controls">
+            <input class="uk-input" id="form-horizontal-text" type="text" placeholder="MOBA, Survie, ...  ">
+        </div>
+    </div>
+
+    <div class="uk-margin">
+        <label class="uk-form-label" for="form-horizontal-text">Icone du Jeu</label>
+        <div class="uk-form-controls">
+            <input class="uk-input" id="form-horizontal-text" type="text" placeholder="Url de l'icone ...">
+        </div>
+    </div>
+
+    <div class="uk-margin">
+        <label class="uk-form-label" for="form-horizontal-text">Image du Jeu</label>
+        <div class="uk-form-controls">
+            <input class="uk-input" id="form-horizontal-text" type="text" placeholder="Url de l'image ...">
+        </div>
+    </div>
+
+    <div class="uk-margin">
+        <label class="uk-form-label" for="form-horizontal-select">Éditeur du Jeu</label>
+        <div class="uk-form-controls">
+            <select class="uk-select" id="form-horizontal-select">
+              {% for editeur in editeurs %}
+                <option>{{ editeur.nomEditeur}}</option>
+              {% endfor %}
+            </select>
+        </div>
+    </div>
+
+</form>
+  </div>
 </body>

@@ -6,3 +6,15 @@ body{
   background-size:cover;
   background-position: center;
 }
+
+.uk-card{
+  opacity: 0.70;
+}
+
+textarea{
+  resize:none;
+}
+
+label{
+  color:white;
+}

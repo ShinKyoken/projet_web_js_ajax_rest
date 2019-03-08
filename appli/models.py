@@ -37,3 +37,6 @@ def get_All_Jeux_by_Annee(annee):
 
 def get_All_Jeux():
     return JEU.query.all()
+
+def get_All_Editeurs():
+    return EDITEUR.query.all()

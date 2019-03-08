@@ -9,4 +9,5 @@ def home():
     """
     return render_template(
         "jeux.html",
-        listeJeux = get_All_Jeux())
+        listeJeux = get_All_Jeux(),
+        editeurs = get_All_Editeurs())
