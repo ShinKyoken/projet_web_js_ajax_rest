@@ -5,7 +5,12 @@
   <title>Jeux de ouf</title>
   <link rel="stylesheet" href="{{ url_for('static',filename='css/uikit.css')}}"/>
   <link rel="stylesheet" href="{{ url_for('static',filename='css/page.css')}}"/>
+  <script src="{{ url_for('static',filename='js/jquery.min.js')}}"></script>
   <script src="{{ url_for('static',filename='js/uikit.min.js')}}"></script>
+  <script src="{{ url_for('static',filename='js/require.js')}}"></script>
+  <script src="{{ url_for('static',filename='js/jeux.js')}}"></script>
+
+
 </head>
 
   <body>
@@ -57,7 +62,7 @@
     </div>
   </div>
   <div class="container uk-margin-large-left uk-margin-large">
-    <div class="container">
+    <div class="container"> <!-- Div container de l'éditeur -->
       <form class="uk-form-horizontal uk-margin-large">
 
       <div class="uk-margin-medium">
@@ -74,50 +79,12 @@
           </div>
       </div>
     </form>
-  </div>
-  <div class="container">
-    <form class="uk-form-horizontal uk-margin-large">
-
-    <div class="uk-margin-medium">
-        <label class="uk-form-label uk-label uk-width-1-4 uk-text-center" for="form-horizontal-text">Nom du Jeu</label>
-        <div class="uk-form-controls">
-            <input class="uk-input uk-width-1-2" id="form-horizontal-text" type="text" placeholder="Minecraft, League of Legends, ...">
-        </div>
-    </div>
-
-    <div class="uk-margin-medium">
-        <label class="uk-form-label uk-label uk-width-1-4 uk-text-center" for="form-horizontal-text">Genre du Jeu</label>
-        <div class="uk-form-controls">
-            <input class="uk-input uk-width-1-2" id="form-horizontal-text" type="text" placeholder="MOBA, Survie, ...  ">
-        </div>
-    </div>
-
-    <div class="uk-margin-medium">
-        <label class="uk-form-label uk-label uk-width-1-4 uk-text-center" for="form-horizontal-text">Icone du Jeu</label>
-        <div class="uk-form-controls">
-            <input class="uk-input uk-width-1-2" id="form-horizontal-text" type="text" placeholder="Url de l'icone ...">
-        </div>
-    </div>
-
-    <div class="uk-margin-medium">
-        <label class="uk-form-label uk-label uk-width-1-4 uk-text-center" for="form-horizontal-text">Image du Jeu</label>
-        <div class="uk-form-controls">
-            <input class="uk-input uk-width-1-2" id="form-horizontal-text" type="text" placeholder="Url de l'image ...">
-        </div>
-    </div>
-
-    <div class="uk-margin-medium">
-        <label class="uk-form-label uk-label uk-width-1-4 uk-text-center" for="form-horizontal-select">Éditeur du Jeu</label>
-        <div class="uk-form-controls">
-            <select class="uk-select uk-width-1-2" id="form-horizontal-select">
-              {% for editeur in editeurs %}
-                <option>{{ editeur.nomEditeur}}</option>
-              {% endfor %}
-            </select>
-        </div>
-    </div>
-  </div>
-
-</form>
+  </div> <!-- Div container de l'éditeur -->
+  <section id="tools">
+    <img id="add" src="../static/images/new.png" alt="Nouvelle chose à faire"/>
+    <img id="del" src="../static/images/delete.png" alt="Enlever cette tache"/>
+  </section>
+  <section class="uk-section" id="currentJeu">
+   </section>
   </div>
 </body>
