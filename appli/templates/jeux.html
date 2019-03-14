@@ -7,14 +7,17 @@
   <link rel="stylesheet" href="{{ url_for('static',filename='css/page.css')}}"/>
   <script src="{{ url_for('static',filename='js/jquery.min.js')}}"></script>
   <script src="{{ url_for('static',filename='js/uikit.min.js')}}"></script>
-  <script src="{{ url_for('static',filename='js/require.js')}}"></script>
+  <script src="{{ url_for('static',filename='js/uikit-icons.min.js')}}"></script>
   <script src="{{ url_for('static',filename='js/jeux.js')}}"></script>
-
-
 </head>
 
   <body>
     <h1 class="uk-h1 uk-text-center">Les Jeux</h1>
+    <div id="divEditeur" type="hidden">
+      <ul id="listeEditeurs">
+        {% for editeur in editeurs %}<li>{{editeur.nomEditeur}}</li>{% endfor %}
+      </ul>
+    </div>
     <div class="uk-container">
       <div class="uk-text-center uk-grid-match" uk-grid>
         {% for jeu in listeJeux %}
@@ -48,7 +51,7 @@
                       </div>
                   </div>
               </div>
-              <a class="uk-button uk-button-default" href="#modal-media-youtube" uk-toggle>YouTube</a>
+              <a href="#modal-media-youtube" class="uk-icon-button  uk-margin-small-right" uk-icon="youtube" uk-toggle></a>
               <div id="modal-media-youtube" class="uk-flex-top" uk-modal>
                   <div class="uk-modal-dialog uk-width-auto uk-margin-auto-vertical">
                       <button class="uk-modal-close-outside" type="button" uk-close></button>
@@ -61,8 +64,9 @@
         {% endfor %}
     </div>
   </div>
-  <div class="container uk-margin-large-left uk-margin-large">
-    <div class="container"> <!-- Div container de l'éditeur -->
+  <div class="container uk-margin uk-margin-large-left">
+  <!-- <div class="container uk-margin-large-left uk-margin-large">
+    <div class="container">
       <form class="uk-form-horizontal uk-margin-large">
 
       <div class="uk-margin-medium">
@@ -79,12 +83,11 @@
           </div>
       </div>
     </form>
-  </div> <!-- Div container de l'éditeur -->
-  <section id="tools">
+  </div> -->
+  <section class=" uk-margin-top uk-margin-bottom-small" id="tools">
     <img id="add" src="../static/images/new.png" alt="Nouvelle chose à faire"/>
     <img id="del" src="../static/images/delete.png" alt="Enlever cette tache"/>
   </section>
-  <section class="uk-section" id="currentJeu">
-   </section>
+  <section id="currentJeu"></section>
   </div>
 </body>
