@@ -1,17 +1,5 @@
 $(function() {
-  // require( ['mysql'], function( mysql ) {
-  // var connection =  mysql.createConnection({
-  //                     host : "servinfo-mariadb",
-  //                     user : "pauthier",
-  //                     password: "pauthier",
-  //                     database: "DBpauthier"
-  //                   });
-  //
-  // connection.connect(function(err) {
-  //       if (err) throw err;
-  //       console.log("Connected!");
-  //     });
-  //   });
+
   $("#tools #add").on("click", formJeu);
 
   function Jeu(nomJeu, genreJeu, anneeJeu, editeurJeu, descriptionJeu, iconeJeu, imageJeu,   urlTrailer){
