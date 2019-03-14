@@ -8,4 +8,6 @@ def home():
     Redirige vers l'accueil du site.
     """
     return render_template(
-        "jeux.html")
+        "jeux.html",
+        listeJeux = get_All_Jeux(),
+        editeurs = get_All_Editeurs())

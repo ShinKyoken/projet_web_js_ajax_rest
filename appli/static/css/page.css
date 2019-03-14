@@ -1,0 +1,18 @@
+body{
+  background-image: url("../images/background.gif");
+  min-height: 100vh;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size:cover;
+  background-position: center;
+}
+
+.uk-card{
+  opacity: 0.80;
+}
+img{
+  opacity:1;
+}
+textarea{
+  resize:none;
+}
