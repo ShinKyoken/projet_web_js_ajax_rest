@@ -20,7 +20,7 @@ class JEU(db.Model):
     nomJeu         = db.Column(db.String(100))
     nomGenre       = db.Column(db.String(100))
     anneeJeu       = db.Column(db.Integer)
-    idEditeur      = db.Column(db.Integer, db.ForeignKey("EDITEUR.idEditeur"))
+    nomEditeur     = db.Column(db.String(100), db.ForeignKey("EDITEUR.nomEditeur"))
     descriptionJeu = db.Column(db.String(200))
     iconeJeu       = db.Column(db.String(100))
     imageJeu       = db.Column(db.String(100))
@@ -28,37 +28,37 @@ class JEU(db.Model):
 
 class JeuSchema(ma.Schema):
     class Meta:
-        fields = ("idJeu","nomJeu","nomGenre","anneeJeu","idEditeur","descriptionJeu","iconeJeu","imageJeu","urlTrailer")
+        fields = ("idJeu","nomJeu","nomGenre","anneeJeu","nomEditeur","descriptionJeu","iconeJeu","imageJeu","urlTrailer")
 
 jeu_schema = JeuSchema()
 jeux_schema = JeuSchema(many = True)
 
 
 class EDITEUR(db.Model):
-    idEditeur     = db.Column(db.Integer, primary_key = True)
-    nomEditeur    =  db.Column(db.String(100))
+    nomEditeur    =  db.Column(db.String(100), primary_key = True)
+    idEditeur     =  db.Column(db.Integer, unique = True, autoincrement = True)
     anneeCreation =  db.Column(db.Integer)
 
 class EditeurSchema(ma.Schema):
     class Meta:
-        fields = ("idEditeur","nomEditeur","anneeCreation")
+        fields = ("nomEditeur","idEditeur","anneeCreation")
 
 editeur_schema = EditeurSchema()
 editeurs_schema = EditeurSchema(many = True)
 
 
-@app.route("/editeur", methods = ["GET"])
+@app.route("/editeurs", methods = ["GET"])
 def get_editeur():
     all_editeurs = EDITEUR.query.all()
     result = editeurs_schema.dump(all_editeurs)
     return jsonify(result.data)
 
-@app.route("/editeur/<idEditeur>", methods = ["GET"])
+@app.route("/editeurs/<idEditeur>", methods = ["GET"])
 def editeur_detail(idEditeur):
     editeur = EDITEUR.query.get(idEditeur)
     return editeur_schema.jsonify(editeur)
 
-@app.route("/editeur/<idEditeur>", methods = ["PUT"])
+@app.route("/editeurs/<idEditeur>", methods = ["PUT"])
 def editeur_update(idEditeur):
     editeur = EDITEUR.query.get(idEditeur)
 
@@ -72,7 +72,7 @@ def editeur_update(idEditeur):
 
     return editeur_schema.jsonify(editeur)
 
-@app.route("/editeur/<idEditeur>", methods = ["DELETE"])
+@app.route("/editeurs/<idEditeur>", methods = ["DELETE"])
 def editeur_delete(idEditeur):
     editeur = EDITEUR.query.get(idEditeur)
 
@@ -82,18 +82,18 @@ def editeur_delete(idEditeur):
     return editeur_schema.jsonify(editeur)
 
 
-@app.route("/jeu", methods = ["GET"])
+@app.route("/jeux", methods = ["GET"])
 def get_jeu():
     all_jeux = JEU.query.all()
     result = jeux_schema.dump(all_jeux)
     return jsonify(result.data)
 
-@app.route("/jeu/<idJeu>", methods = ["GET"])
+@app.route("/jeux/<idJeu>", methods = ["GET"])
 def jeu_detail(idJeu):
     jeu = JEU.query.get(idJeu)
     return jeu_schema.jsonify(jeu)
 
-@app.route("/jeu/<idJeu>", methods = ["PUT"])
+@app.route("/jeux/<idJeu>", methods = ["PUT"])
 def jeu_update(idJeu):
     jeu = JEU.query.get(idJeu)
 
@@ -119,7 +119,7 @@ def jeu_update(idJeu):
 
     return jeu_schema.jsonify(jeu)
 
-@app.route("/jeu/<idJeu>", methods = ["DELETE"])
+@app.route("/jeux/<idJeu>", methods = ["DELETE"])
 def user_delete(idJeu):
     jeu = JEU.query.get(idJeu)
 
@@ -127,6 +127,10 @@ def user_delete(idJeu):
     db.session.commit()
 
     return jeu_schema.jsonify(jeu)
+
+@app.route("/")
+def home():
+    return render_template("jeux.html")
 
 
 if __name__ == '__main__':
