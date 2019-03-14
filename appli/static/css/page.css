@@ -16,3 +16,7 @@ img{
 textarea{
   resize:none;
 }
+
+#divEditeur{
+  visibility: hidden;
+}
