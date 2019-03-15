@@ -51,12 +51,15 @@ def add_editeur():
     nomEditeur    = request.json['nomEditeur']
     anneeCreation = request.json['anneeCreation']
 
-    new_editeur = Editeur(username, email)
+    new_editeur = EDITEUR(
+    nomEditeur = nomEditeur,
+    anneeCreation = anneeCreation
+    )
 
     db.session.add(new_editeur)
     db.session.commit()
 
-    return jsonify(new_editeur)
+    return editeur_schema.jsonify(new_editeur)
 
 @app.route("/editeurs", methods = ["GET"])
 def get_editeur():

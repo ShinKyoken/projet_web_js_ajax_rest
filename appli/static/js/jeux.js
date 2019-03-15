@@ -46,6 +46,7 @@ $(function() {
 
 
   $("#tools #add").on("click", formJeu);
+  $("#tools #addEditeur").on("click", formEditeur);
 
   function Jeu(nomJeu, nomGenre, anneeJeu, nomEditeur, descriptionJeu, iconeJeu, imageJeu,   urlTrailer){
       this.nomJeu = nomJeu;
@@ -58,9 +59,8 @@ $(function() {
       this.urlTrailer = urlTrailer;
     }
 
-  function Editeur(nomEditeur, idEditeur, anneeCreation){
+  function Editeur(nomEditeur, anneeCreation){
     this.nomEditeur = nomEditeur;
-    this.idEditeur = idEditeur;
     this.anneeCreation = anneeCreation;
   }
 
@@ -73,13 +73,14 @@ $(function() {
           var listeEditeurs = ''
           for (var i = 0; i < editeurs.length; i++) {
             if (i ==1){
-              listeEditeurs += '<option autofocus>' + editeurs[i].nomEditeur + '<option>';
+              listeEditeurs += '<option autofocus>' + editeurs[i].nomEditeur + '</option>';
             }
             else{
-              listeEditeurs += '<option>' + editeurs[i].nomEditeur + '<option>';
+              listeEditeurs += '<option>' + editeurs[i].nomEditeur + '</option>';
             }
           }
           $("#currentJeu").empty();
+          $("#currentEditeur").empty();
           $("#currentJeu")
               .append($('<div class="container currentJeu uk-margin"><form class="uk-form-horizontal">'))
               .append($('<div><label class="uk-form-label uk-label uk-width-1-4 uk-text-center" for="form-horizontal-text">Nom du Jeu</label><div class="uk-form-controls"><input class="uk-input uk-width-1-2 nomJeu"  id="form-horizontal-text" type="text" placeholder="Minecraft, League of Legends, ..."></div></div>'))
@@ -128,4 +129,40 @@ $(function() {
       refreshJeuList();
     }
 
+    function formEditeur(){
+          $("#currentEditeur").empty();
+          $("#currentJeu").empty();
+          $("#currentEditeur")
+              .append($('<div class="container currentEditeur uk-margin"><form class="uk-form-horizontal">'))
+
+              .append($('<div><label class="uk-form-label uk-label uk-width-1-4 uk-text-center" for="form-horizontal-text">Nom du éditeur</label><div class="uk-form-controls"><input class="uk-input uk-width-1-2 nomEditeur"  id="form-horizontal-text" type="text" placeholder="Riot Games, Epic Games, ..."></div></div>'))
+              .append($('<div class="uk-margin-medium"><label class="uk-form-label uk-label uk-width-1-4 uk-text-center" for="form-horizontal-text">Année de création</label><div class="uk-form-controls"><input class="uk-input uk-width-1-2 anneeCreation" id="form-horizontal-text" type="number" value="2019"></div></div>'))
+
+              .append($('<span><input type="button" class="uk-button uk-button-primary" value="Sauvegarder l\'éditeur"><br></span>').on("click", saveNewEditeur))
+              .append($('</form></div>'));
+    }
+
+
+    function saveNewEditeur(){
+      var editeur = new Editeur(
+        $("#currentEditeur .nomEditeur").val(),
+        $("#currentEditeur .anneeCreation").val(),
+      );
+      console.log(JSON.stringify(editeur))
+      $.ajax({
+        url : "http://localhost:5000/editeurs",
+        type : 'POST',
+        contentType : 'application/json',
+        data : JSON.stringify(editeur),
+        dataType : 'json',
+        success: function(msg){
+          alert('Save Success');
+        },
+        error: function(err){
+          alert('Save Error');
+          console.log(err)
+        }
+      });
+      refreshJeuList();
+    }
 });
