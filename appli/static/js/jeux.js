@@ -13,9 +13,10 @@ $(function() {
                     $('#jeux')
                     .append($('<div class="uk-width-1-3"><div class="uk-card uk-card-default"><div class="uk-card-header"><div class="uk-grid-small" uk-grid><div class="uk-width-auto"><img class="uk-border-circle" width="80" height="80" src="../static/images/icones/' + jeux[i].iconeJeu + '"></div>'
                     + '<div class="uk-width-expand uk-text-center"><h3 class="uk-card-title uk-margin-remove-bottom">' + jeux[i].nomJeu + '</h3><p class="uk-text-meta uk-margin-remove-top">' + jeux[i].nomEditeur + ', ' + jeux[i].anneeJeu + ', ' + jeux[i].nomGenre + '</p></div></div></div>'
-                    + '<div class="uk-card-footer uk-text-center"><a class="uk-button uk-button-default" href="#modal-sections-'+ jeux[i].idJeu + '" uk-toggle>voir plus</a><div id="modal-sections-'+ jeux[i].idJeu +'" uk-modal><div class="uk-modal-dialog"><button class="uk-modal-close-default" type="button" uk-close></button><div class="uk-modal-header"><h2 class="uk-modal-title uk-text-center">' + jeux[i].nomJeu +'</h2></div>'
+                    + '<div id="cardFooter-' + jeux[i].idJeu + '"' + 'class="uk-card-footer uk-text-center"><a class="uk-button uk-button-default" href="#modal-sections-'+ jeux[i].idJeu + '" uk-toggle>voir plus</a><div id="modal-sections-'+ jeux[i].idJeu +'" uk-modal><div class="uk-modal-dialog"><button class="uk-modal-close-default" type="button" uk-close></button><div class="uk-modal-header"><h2 class="uk-modal-title uk-text-center">' + jeux[i].nomJeu +'</h2></div>'
                     + '<div class="uk-modal-body"><img class="uk-align-center" width="300" height="500"src="../static/images/imagesFull/' + jeux[i].imageJeu + '"/><p>' + jeux[i].descriptionJeu + '</p></div><div class="uk-modal-footer uk-text-right"><button class="uk-button uk-button-default uk-modal-close" type="button">retour</button></div></div></div><a href="#modal-media-youtube' + jeux[i].idJeu + '" class="uk-icon-button  uk-margin-small-right" uk-icon="youtube" uk-toggle></a>'
                     + '<div id="modal-media-youtube' + jeux[i].idJeu + '" class="uk-flex-top" uk-modal><div class="uk-modal-dialog uk-width-auto uk-margin-auto-vertical"><button class="uk-modal-close-outside" type="button" uk-close></button>' + jeux[i].urlTrailer + '</div></div></div></div></div>'))
+                    fillDetailsJeu(jeux[i])
                 }
                 // else if(i>3 && i % 3 !=0){
                 //   $('#jeux')
@@ -47,6 +48,7 @@ $(function() {
 
   $("#tools #add").on("click", formJeu);
   $("#tools #addEditeur").on("click", formEditeur);
+  $("#tools #details").on("click", fillFormJeu);
 
   function Jeu(nomJeu, nomGenre, anneeJeu, nomEditeur, descriptionJeu, iconeJeu, imageJeu,   urlTrailer){
       this.nomJeu = nomJeu;
@@ -119,6 +121,7 @@ $(function() {
         data : JSON.stringify(jeu),
         dataType : 'json',
         success: function(msg){
+          refreshJeuList();
           alert('Save Success');
         },
         error: function(err){
@@ -126,7 +129,6 @@ $(function() {
           console.log(err)
         }
       });
-      refreshJeuList();
     }
 
     function formEditeur(){
@@ -164,5 +166,31 @@ $(function() {
         }
       });
       refreshJeuList();
+    }
+
+    function details(event){
+        $("#currentJeu").empty();
+        formTask();
+        fillFormTask(event.data);
+        }
+
+    function fillFormJeu(jeu){
+      formJeu()
+      $("#currentJeu .nomJeu").val(jeu.nomJeu),
+      $("#currentJeu .nomGenre").val(jeu.nomGenre),
+      $("#currentJeu .anneeJeu").val(jeu.anneeJeu),
+      $("#currentJeu .nomEditeur").val(jeu.nomEditeur),
+      $("#currentJeu .descriptionJeu").val(jeu.description),
+      $("#currentJeu .iconeJeu").val(jeu.iconeJeu),
+      $("#currentJeu .imageJeu").val(jeu.imageJeu),
+      $("#currentJeu .urlTrailer").val(jeu.urlTrailer)
+    }
+
+    function affiche(x) {
+      console.log(x);
+    }
+    function fillDetailsJeu(jeu){
+      $('#cardFooter-' + jeu.idJeu)
+            .append($('<span><input type="button" class="uk-button uk-button-primary boutonDetails" value="Modifier"><br></span>').on("click",fillFormJeu(jeu)))
     }
 });
