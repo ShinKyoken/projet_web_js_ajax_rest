@@ -46,6 +46,17 @@ class EditeurSchema(ma.Schema):
 editeur_schema = EditeurSchema()
 editeurs_schema = EditeurSchema(many = True)
 
+@app.route("/editeurs", methods=["POST"])
+def add_editeur():
+    nomEditeur    = request.json['nomEditeur']
+    anneeCreation = request.json['anneeCreation']
+
+    new_editeur = Editeur(username, email)
+
+    db.session.add(new_editeur)
+    db.session.commit()
+
+    return jsonify(new_editeur)
 
 @app.route("/editeurs", methods = ["GET"])
 def get_editeur():
@@ -81,6 +92,32 @@ def editeur_delete(idEditeur):
 
     return editeur_schema.jsonify(editeur)
 
+@app.route("/jeux", methods=["POST"])
+def add_jeu():
+    nomJeu         = request.json['nomJeu']
+    nomGenre       = request.json['nomGenre']
+    anneeJeu       = request.json['anneeJeu']
+    nomEditeur     = request.json['nomEditeur']
+    descriptionJeu = request.json['descriptionJeu']
+    iconeJeu       = request.json['iconeJeu']
+    imageJeu       = request.json['imageJeu']
+    urlTrailer     = request.json['urlTrailer']
+
+
+    new_jeu = JEU(
+        nomJeu         = nomJeu,
+        nomGenre       = nomGenre,
+        anneeJeu       = anneeJeu,
+        nomEditeur     = nomEditeur,
+        descriptionJeu = descriptionJeu,
+        iconeJeu       = iconeJeu,
+        imageJeu       = imageJeu,
+        urlTrailer     = urlTrailer)
+
+    db.session.add(new_jeu)
+    db.session.commit()
+
+    return jeu_schema.jsonify(new_jeu)
 
 @app.route("/jeux", methods = ["GET"])
 def get_jeu():
@@ -120,7 +157,7 @@ def jeu_update(idJeu):
     return jeu_schema.jsonify(jeu)
 
 @app.route("/jeux/<idJeu>", methods = ["DELETE"])
-def user_delete(idJeu):
+def jeu_delete(idJeu):
     jeu = JEU.query.get(idJeu)
 
     db.session.delete(jeu)
