@@ -8,37 +8,20 @@ $(function() {
             dataType : "json",
             success: function(jeux) {
                 $('#jeux').empty();
-                // var cpt = 2;
                 for(let i=0;i<jeux.length;i++){
                     $('#jeux')
-                    .append($('<div class="uk-width-1-3"><div class="uk-card uk-card-default"><div class="uk-card-header"><div class="uk-grid-small" uk-grid><div class="uk-width-auto"><img class="uk-border-circle" width="80" height="80" src="../static/images/icones/' + jeux[i].iconeJeu + '"></div>'
+                    .append($('<div class="uk-width-1-3"><div class="uk-card uk-card-default"><div class="uk-card-header"><div class="uk-grid-small" uk-grid><div class="uk-width-auto"><img width="80" height="80" src="' + jeux[i].iconeJeu + '"></div>'
                     + '<div class="uk-width-expand uk-text-center"><h3 class="uk-card-title uk-margin-remove-bottom">' + jeux[i].nomJeu + '</h3><p class="uk-text-meta uk-margin-remove-top">' + jeux[i].nomEditeur + ', ' + jeux[i].anneeJeu + ', ' + jeux[i].nomGenre + '</p></div></div></div>'
-                    + '<div class="uk-card-footer uk-text-center"><a class="uk-button uk-button-default" href="#modal-sections-'+ jeux[i].idJeu + '" uk-toggle>voir plus</a><div id="modal-sections-'+ jeux[i].idJeu +'" uk-modal><div class="uk-modal-dialog"><button class="uk-modal-close-default" type="button" uk-close></button><div class="uk-modal-header"><h2 class="uk-modal-title uk-text-center">' + jeux[i].nomJeu +'</h2></div>'
-                    + '<div class="uk-modal-body"><img class="uk-align-center" width="300" height="500"src="../static/images/imagesFull/' + jeux[i].imageJeu + '"/><p>' + jeux[i].descriptionJeu + '</p></div><div class="uk-modal-footer uk-text-right"><button class="uk-button uk-button-default uk-modal-close" type="button">retour</button></div></div></div><a href="#modal-media-youtube' + jeux[i].idJeu + '" class="uk-icon-button  uk-margin-small-right" uk-icon="youtube" uk-toggle></a>'
-                    + '<div id="modal-media-youtube' + jeux[i].idJeu + '" class="uk-flex-top" uk-modal><div class="uk-modal-dialog uk-width-auto uk-margin-auto-vertical"><button class="uk-modal-close-outside" type="button" uk-close></button>' + jeux[i].urlTrailer + '</div></div></div></div></div>'))
+                    + '<div class="uk-card-footer uk-text-center"><a class="uk-icon-button  uk-margin-small-right"  href="#modal-sections-'+ jeux[i].idJeu + '" uk-icon="plus-circle" uk-toggle></a><div id="modal-sections-'+ jeux[i].idJeu +'" uk-modal><div class="uk-modal-dialog"><button class="uk-modal-close-default" type="button" uk-close></button><div class="uk-modal-header"><h2 class="uk-modal-title uk-text-center">' + jeux[i].nomJeu +'</h2></div>'
+                    + '<div class="uk-modal-body"><img class="uk-align-center" width="300" height="500"src="' + jeux[i].imageJeu + '"/><p>' + jeux[i].descriptionJeu + '</p></div><div class="uk-modal-footer uk-text-right"><button class="uk-button uk-button-default uk-modal-close" type="button">retour</button></div></div></div>'
+                    + '<a href="#modal-media-youtube-' + jeux[i].idJeu + '" class="uk-icon-button  uk-margin-small-right" uk-icon="youtube" uk-toggle></a>'
+                    + '<a class="uk-icon-button  uk-margin-small-right" uk-icon="pencil" uk-toggle></a>'
+                    + '<a class="uk-icon-button  uk-margin-small-right" uk-icon="trash" uk-toggle></a>'
+                    + '<div id="modal-media-youtube-' + jeux[i].idJeu + '" class="uk-flex-top" uk-modal><div class="uk-modal-dialog uk-width-auto uk-margin-auto-vertical"><button class="uk-modal-close-outside" type="button" uk-close></button>' + jeux[i].urlTrailer + '</div></div></div></div></div>'))
                 }
                 if (jeux.length == 0){
                   $('#jeux').append($('<b>Aucun jeu à afficher !</b>'))
                 }
-                // else if(i>3 && i % 3 !=0){
-                //   $('#jeux')
-                //   .append($('<li class="uk-active"><a href="#">Item'+ cpt +'</a></li><div class="uk-width-1-3"><div class="uk-card uk-card-default"><div class="uk-card-header"><div class="uk-grid-small" uk-grid><div class="uk-width-auto"><img class="uk-border-circle" width="80" height="80" src="../static/images/icones/' + jeux[i].iconeJeu + '"></div>'
-                //   + '<div class="uk-width-expand uk-text-center"><h3 class="uk-card-title uk-margin-remove-bottom">' + jeux[i].nomJeu + '</h3><p class="uk-text-meta uk-margin-remove-top">' + jeux[i].nomEditeur + ', ' + jeux[i].anneeJeu + ', ' + jeux[i].nomGenre + '</p></div></div></div>'
-                //   + '<div class="uk-card-footer uk-text-center"><a class="uk-button uk-button-default" href="#modal-sections-'+ jeux[i].idJeu + '" uk-toggle>voir plus</a><div id="modal-sections-'+ jeux[i].idJeu +'" uk-modal><div class="uk-modal-dialog"><button class="uk-modal-close-default" type="button" uk-close></button><div class="uk-modal-header"><h2 class="uk-modal-title uk-text-center">' + jeux[i].nomJeu +'</h2></div>'
-                //   + '<div class="uk-modal-body"><img class="uk-align-center" width="300" height="500"src="../static/images/imagesFull/' + jeux[i].imageJeu + '"/><p>' + jeux[i].descriptionJeu + '</p></div><div class="uk-modal-footer uk-text-right"><button class="uk-button uk-button-default uk-modal-close" type="button">retour</button></div></div></div><a href="#modal-media-youtube' + jeux[i].idJeu + '" class="uk-icon-button  uk-margin-small-right" uk-icon="youtube" uk-toggle></a>'
-                //   + '<div id="modal-media-youtube' + jeux[i].idJeu + '" class="uk-flex-top" uk-modal><div class="uk-modal-dialog uk-width-auto uk-margin-auto-vertical"><button class="uk-modal-close-outside" type="button" uk-close></button>' + jeux[i].urlTrailer + '</div></div></div></div></div>'))
-                // }
-                // else if (i>3 && i % 3 == 0) {
-                //   $('#jeux')
-                //   .append($('<li class="uk-active"><a href="#">Item'+ cpt +'</a></li><div class="uk-width-1-3"><div class="uk-card uk-card-default"><div class="uk-card-header"><div class="uk-grid-small" uk-grid><div class="uk-width-auto"><img class="uk-border-circle" width="80" height="80" src="../static/images/icones/' + jeux[i].iconeJeu + '"></div>'
-                //   + '<div class="uk-width-expand uk-text-center"><h3 class="uk-card-title uk-margin-remove-bottom">' + jeux[i].nomJeu + '</h3><p class="uk-text-meta uk-margin-remove-top">' + jeux[i].nomEditeur + ', ' + jeux[i].anneeJeu + ', ' + jeux[i].nomGenre + '</p></div></div></div>'
-                //   + '<div class="uk-card-footer uk-text-center"><a class="uk-button uk-button-default" href="#modal-sections-'+ jeux[i].idJeu + '" uk-toggle>voir plus</a><div id="modal-sections-'+ jeux[i].idJeu +'" uk-modal><div class="uk-modal-dialog"><button class="uk-modal-close-default" type="button" uk-close></button><div class="uk-modal-header"><h2 class="uk-modal-title uk-text-center">' + jeux[i].nomJeu +'</h2></div>'
-                //   + '<div class="uk-modal-body"><img class="uk-align-center" width="300" height="500"src="../static/images/imagesFull/' + jeux[i].imageJeu + '"/><p>' + jeux[i].descriptionJeu + '</p></div><div class="uk-modal-footer uk-text-right"><button class="uk-button uk-button-default uk-modal-close" type="button">retour</button></div></div></div><a href="#modal-media-youtube' + jeux[i].idJeu + '" class="uk-icon-button  uk-margin-small-right" uk-icon="youtube" uk-toggle></a>'
-                //   + '<div id="modal-media-youtube' + jeux[i].idJeu + '" class="uk-flex-top" uk-modal><div class="uk-modal-dialog uk-width-auto uk-margin-auto-vertical"><button class="uk-modal-close-outside" type="button" uk-close></button>' + jeux[i].urlTrailer + '</div></div></div></div></div>'))
-                //   }
-                //   cpt += 1;
-                // }
-
               },
             error: function(req, status, err) {
               $("#jeux").html("<b>Impossible de récupérer les taches à réaliser !</b>");
@@ -122,6 +105,8 @@ $(function() {
         data : JSON.stringify(jeu),
         dataType : 'json',
         success: function(msg){
+          refreshJeuList();
+          $("#currentJeu").empty();
           alert('Save Success');
         },
         error: function(err){
@@ -129,7 +114,6 @@ $(function() {
           console.log(err)
         }
       });
-      refreshJeuList();
     }
 
     function formEditeur(){
