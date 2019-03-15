@@ -17,6 +17,9 @@ $(function() {
                     + '<div class="uk-modal-body"><img class="uk-align-center" width="300" height="500"src="../static/images/imagesFull/' + jeux[i].imageJeu + '"/><p>' + jeux[i].descriptionJeu + '</p></div><div class="uk-modal-footer uk-text-right"><button class="uk-button uk-button-default uk-modal-close" type="button">retour</button></div></div></div><a href="#modal-media-youtube' + jeux[i].idJeu + '" class="uk-icon-button  uk-margin-small-right" uk-icon="youtube" uk-toggle></a>'
                     + '<div id="modal-media-youtube' + jeux[i].idJeu + '" class="uk-flex-top" uk-modal><div class="uk-modal-dialog uk-width-auto uk-margin-auto-vertical"><button class="uk-modal-close-outside" type="button" uk-close></button>' + jeux[i].urlTrailer + '</div></div></div></div></div>'))
                 }
+                if (jeux.length == 0){
+                  $('#jeux').append($('<b>Aucun jeu à afficher !</b>'))
+                }
                 // else if(i>3 && i % 3 !=0){
                 //   $('#jeux')
                 //   .append($('<li class="uk-active"><a href="#">Item'+ cpt +'</a></li><div class="uk-width-1-3"><div class="uk-card uk-card-default"><div class="uk-card-header"><div class="uk-grid-small" uk-grid><div class="uk-width-auto"><img class="uk-border-circle" width="80" height="80" src="../static/images/icones/' + jeux[i].iconeJeu + '"></div>'
@@ -45,7 +48,7 @@ $(function() {
       window.onload = refreshJeuList()
 
 
-  $("#tools #add").on("click", formJeu);
+  $("#tools #addJeu").on("click", formJeu);
 
   function Jeu(nomJeu, nomGenre, anneeJeu, nomEditeur, descriptionJeu, iconeJeu, imageJeu,   urlTrailer){
       this.nomJeu = nomJeu;
@@ -73,10 +76,10 @@ $(function() {
           var listeEditeurs = ''
           for (var i = 0; i < editeurs.length; i++) {
             if (i ==1){
-              listeEditeurs += '<option autofocus>' + editeurs[i].nomEditeur + '<option>';
+              listeEditeurs += '<option autofocus>' + editeurs[i].nomEditeur + '</option>';
             }
             else{
-              listeEditeurs += '<option>' + editeurs[i].nomEditeur + '<option>';
+              listeEditeurs += '<option>' + editeurs[i].nomEditeur + '</option>';
             }
           }
           $("#currentJeu").empty();
