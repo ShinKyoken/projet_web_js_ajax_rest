@@ -33,6 +33,7 @@ $(function() {
 
   $("#tools #addJeu").on("click", formJeu);
   $("#tools #addEditeur").on("click", formEditeur);
+  $("#tools #details").on("click", fillFormJeu);
 
   function Jeu(nomJeu, nomGenre, anneeJeu, nomEditeur, descriptionJeu, iconeJeu, imageJeu,   urlTrailer){
       this.nomJeu = nomJeu;
@@ -106,7 +107,10 @@ $(function() {
         dataType : 'json',
         success: function(msg){
           refreshJeuList();
+<<<<<<< HEAD
           $("#currentJeu").empty();
+=======
+>>>>>>> 8716a4bb8e03db04d988bc29e80d138355f2f9ab
           alert('Save Success');
         },
         error: function(err){
@@ -151,5 +155,31 @@ $(function() {
         }
       });
       refreshJeuList();
+    }
+
+    function details(event){
+        $("#currentJeu").empty();
+        formTask();
+        fillFormTask(event.data);
+        }
+
+    function fillFormJeu(jeu){
+      formJeu()
+      $("#currentJeu .nomJeu").val(jeu.nomJeu),
+      $("#currentJeu .nomGenre").val(jeu.nomGenre),
+      $("#currentJeu .anneeJeu").val(jeu.anneeJeu),
+      $("#currentJeu .nomEditeur").val(jeu.nomEditeur),
+      $("#currentJeu .descriptionJeu").val(jeu.description),
+      $("#currentJeu .iconeJeu").val(jeu.iconeJeu),
+      $("#currentJeu .imageJeu").val(jeu.imageJeu),
+      $("#currentJeu .urlTrailer").val(jeu.urlTrailer)
+    }
+
+    function affiche(x) {
+      console.log(x);
+    }
+    function fillDetailsJeu(jeu){
+      $('#cardFooter-' + jeu.idJeu)
+            .append($('<span><input type="button" class="uk-button uk-button-primary boutonDetails" value="Modifier"><br></span>').on("click",fillFormJeu(jeu)))
     }
 });
