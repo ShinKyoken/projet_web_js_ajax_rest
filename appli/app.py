@@ -35,13 +35,14 @@ jeux_schema = JeuSchema(many = True)
 
 
 class EDITEUR(db.Model):
-    nomEditeur    =  db.Column(db.String(100), primary_key = True)
-    idEditeur     =  db.Column(db.Integer, unique = True, autoincrement = True)
+    idEditeur     =  db.Column(db.Integer, primary_key = True)
+    nomEditeur    =  db.Column(db.String(100))
     anneeCreation =  db.Column(db.Integer)
+    logoEditeur   = db.Column(db.String(100))
 
 class EditeurSchema(ma.Schema):
     class Meta:
-        fields = ("nomEditeur","idEditeur","anneeCreation")
+        fields = ("idEditeur","nomEditeur","anneeCreation","logoEditeur")
 
 editeur_schema = EditeurSchema()
 editeurs_schema = EditeurSchema(many = True)
@@ -50,10 +51,12 @@ editeurs_schema = EditeurSchema(many = True)
 def add_editeur():
     nomEditeur    = request.json['nomEditeur']
     anneeCreation = request.json['anneeCreation']
+    logoEditeur  = request.json['logoEditeur']
 
     new_editeur = EDITEUR(
     nomEditeur = nomEditeur,
-    anneeCreation = anneeCreation
+    anneeCreation = anneeCreation,
+    logoEditeur = logoEditeur
     )
 
     db.session.add(new_editeur)
@@ -78,9 +81,11 @@ def editeur_update(idEditeur):
 
     nomEditeur     = request.json['nomEditeur']
     anneeCreation  = request.json['anneeCreation']
+    logoEditeur   = request.json['logoEditeur']
 
     editeur.nomEditeur    = nomEditeur
     editeur.anneeCreation = anneeCreation
+    editeur.logoEditeur  = logoEditeur
 
     db.session.commit()
 
@@ -119,6 +124,7 @@ def add_jeu():
 
     db.session.add(new_jeu)
     db.session.commit()
+    
 
     return jeu_schema.jsonify(new_jeu)
 

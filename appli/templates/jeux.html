@@ -14,18 +14,28 @@
   <body>
     <h1 class="uk-h1 uk-text-center">Les Jeux</h1>
     <div class="uk-container">
-      <div class="uk-text-center uk-grid-match"  id="jeux" uk-grid>
-        <ul class="uk-dotnav uk-dotnav-vertical">
+      <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="1" uk-slider>
+        <ul id="jeux" class="uk-grid uk-text-center uk-slider-items uk-child-width-1-2@s uk-child-width-1-3@m">
+
         </ul>
+        <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slider-item="previous"></a>
+        <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slider-item="next"></a>
       </div>
   </div>
-  <div class="container uk-margin uk-margin-large-left">
-  <section class=" uk-margin-top uk-margin-bottom-small" id="tools">
-    <img id="add" src="../static/images/new.png" alt="Nouvelle chose à faire"/>
-    <img id="del" src="../static/images/delete.png" alt="Enlever cette tache"/>
-    <button type="button" name="button" id="addEditeur">editeur</button>
-    <button type="button" name="button" id="details">details</button>
+  <div class="uk-container">
+      <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="1" uk-slider>
+        <ul id="editeurs" class="uk-grid uk-text-center uk-slider-items uk-child-width-1-2@s uk-child-width-1-3@m">
+
+        </ul>
+        <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slider-item="previous"></a>
+        <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slider-item="next"></a>
+      </div>
+  </div>
+  <section class="uk-text-center uk-margin-top uk-margin-bottom-small" id="tools">
+    <button id="addJeu" class="uk-button uk-button-primary">Ajouter un nouveau jeu<img class="uk-margin-small-left" src="../static/images/manette.png" height=40 width=40/></button></a>
+    <button id="addEditeur" class="uk-button uk-button-primary">Ajouter un nouvel éditeur<img class="uk-margin-small-left" src="../static/images/user.png" height=40 width=40/></button></a>
   </section>
+  <div class="container uk-text-center uk-margin">
   <section id="currentJeu"></section>
   <section id="currentEditeur"></section>
   </div>
