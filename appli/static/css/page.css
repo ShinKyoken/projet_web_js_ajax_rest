@@ -20,3 +20,9 @@ textarea{
 #divEditeur{
   visibility: hidden;
 }
+
+.imageJeu
+{
+  height: 80px;
+  width: 80px;
+}
