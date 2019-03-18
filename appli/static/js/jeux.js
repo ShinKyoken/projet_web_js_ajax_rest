@@ -29,7 +29,7 @@ $(function() {
           });
         }
       window.onload = refreshJeuList()
-    
+
       function refreshEditeurList(){
         $("#editeurs").empty();
         $.ajax({
@@ -136,10 +136,7 @@ $(function() {
         dataType : 'json',
         success: function(msg){
           refreshJeuList();
-<<<<<<< HEAD
           $("#currentJeu").empty();
-=======
->>>>>>> 8716a4bb8e03db04d988bc29e80d138355f2f9ab
           alert('Save Success');
         },
         error: function(err){
