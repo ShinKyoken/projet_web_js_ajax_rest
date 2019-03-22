@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, render_template, redirect, url_for
 from flask_marshmallow import Marshmallow
 from flask_sqlalchemy import *
 from flask_uikit import UIkit
+from flask_cors import CORS
 import os
 
 app = Flask(__name__)
@@ -13,7 +14,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 UIkit(app)
-
+CORS(app)
 
 class JEU(db.Model):
     idJeu          = db.Column(db.Integer, primary_key = True)
@@ -124,7 +125,7 @@ def add_jeu():
 
     db.session.add(new_jeu)
     db.session.commit()
-    
+
 
     return jeu_schema.jsonify(new_jeu)
 
