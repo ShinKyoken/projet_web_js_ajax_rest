@@ -20,3 +20,16 @@ textarea{
 #divEditeur{
   visibility: hidden;
 }
+
+#titre{
+  color: white;
+}
+
+.uk-container{
+  padding-top:5em;
+}
+
+#img{
+  width: 5em;
+  height: 5em;
+}
