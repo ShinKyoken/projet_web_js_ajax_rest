@@ -10,14 +10,17 @@ $(function() {
                 $('#jeux').empty();
                 for(let i=0;i<jeux.length;i++){
                     $('#jeux')
-                    .append($('<li><div class="uk-panel"><div class="uk-card uk-card-default"><div class="uk-card-header"><div class="uk-grid-small" uk-grid=""><div class="uk-width-auto"><img class="imageJeu" src="' + jeux[i].iconeJeu + '"></div>'
+                    .append($('<li class="carteJeu"><div class="uk-panel"><div class="uk-card uk-card-default"><div class="uk-card-header"><div class="uk-grid-small" uk-grid=""><div class="uk-width-auto"><img class="imageJeu" src="' + jeux[i].iconeJeu + '"></div>'
                     + '<div class="uk-width-expand uk-text-center"><h3 class="uk-card-title uk-margin-remove-bottom">' + jeux[i].nomJeu + '</h3><p class="uk-margin-remove-top">' + jeux[i].nomEditeur + ', ' + jeux[i].anneeJeu + ', ' + jeux[i].nomGenre + '</p></div></div></div>'
-                    + '<div class="uk-card-footer uk-text-center"><a class="uk-icon-button uk-margin-small-right"  href="#modal-sections-'+ jeux[i].idJeu + '" uk-icon="plus-circle" uk-toggle></a><div id="modal-sections-'+ jeux[i].idJeu +'" uk-modal><div class="uk-modal-dialog"><button class="uk-modal-close-default" type="button" uk-close></button><div class="uk-modal-header"><h2 class="uk-modal-title uk-text-center">' + jeux[i].nomJeu +'</h2></div>'
+                    + '<div id="card-footer-jeu' + jeux[i].idJeu + '" class="uk-card-footer uk-text-center"><a class="uk-icon-button uk-margin-small-right"  href="#modal-sections-'+ jeux[i].idJeu + '" uk-icon="plus-circle" uk-toggle></a><div id="modal-sections-'+ jeux[i].idJeu +'" uk-modal><div class="uk-modal-dialog"><button class="uk-modal-close-default" type="button" uk-close></button><div class="uk-modal-header"><h2 class="uk-modal-title uk-text-center">' + jeux[i].nomJeu +'</h2></div>'
                     + '<div class="uk-modal-body"><img class="uk-align-center" width="300" height="500"src="' + jeux[i].imageJeu + '"/><p>' + jeux[i].descriptionJeu + '</p></div><div class="uk-modal-footer uk-text-right"><button class="uk-button uk-button-default uk-modal-close" type="button">retour</button></div></div></div>'
                     + '<a href="#modal-media-youtube-' + jeux[i].idJeu + '" class="uk-icon-button  uk-margin-small-right" uk-icon="youtube" uk-toggle></a>'
-                    + '<a class="uk-icon-button  uk-margin-small-right" uk-icon="pencil" uk-toggle></a>'
-                    + '<a class="uk-icon-button  uk-margin-small-right" uk-icon="trash" uk-toggle></a>'
                     + '<div id="modal-media-youtube-' + jeux[i].idJeu + '" class="uk-flex-top" uk-modal><div class="uk-modal-dialog uk-width-auto uk-margin-auto-vertical"><button class="uk-modal-close-outside" type="button" uk-close></button><iframe width="560" height="315" src="//www.youtube.com/embed/' + jeux[i].urlTrailer + '" frameborder="0" allowfullscreen uk-video></iframe></div></div></div></div></div></li>'))
+                    $('#card-footer-jeu' + jeux[i].idJeu)
+                    .append($('<a class="uk-icon-button uk-margin-small-right" uk-icon="pencil"></a>'))
+                    $('#card-footer-jeu' + jeux[i].idJeu)
+                    .append($('<a class="uk-icon-button uk-margin-small-right" uk-icon="trash"></a>').click(delJeu(jeux[i])))
+
                 }
 
                 if (jeux.length == 0){
@@ -41,17 +44,14 @@ $(function() {
                   $('#editeurs').empty();
                   for(let i=0;i<editeurs.length;i++){
                       $('#editeurs')
-                      /*.append($('<li><div class="uk-panel"><div class="uk-card uk-card-default"><div class="uk-card-header"><div class="uk-grid-small" uk-grid><div class="uk-width-auto"><img width="80" height="80" src="' + editeurs[i].logoEditeur + '"></div>'
-                      + '<div class="uk-width-expand uk-text-center"><h3 class="uk-card-title uk-margin-remove-bottom">' + editeurs[i].nomEditeur + '</h3></div><div><p class="uk-text-meta uk-margin-remove-top">' + editeurs[i].anneeCreation +'</p></div></div>'
-                      + '</div><div class="uk-card-footer uk-text-center"></div>'
-                      + '<a class="uk-icon-button uk-button  uk-margin-small-right" uk-icon="pencil" uk-toggle></a>'
-                      + '<a class="uk-icon-button uk-button uk-margin-small-right" uk-icon="trash" uk-toggle></a></div></div></div></div></li>'))*/
-                      .append($('<li><div class="uk-panel"><div class="uk-card uk-card-default"><div class="uk-card-header"><div class="uk-grid-small" uk-grid><div class="uk-width-auto"><img id="img" src="' + editeurs[i].logoEditeur + '"></div>'
+                      .append($('<li class="carteEditeur"><div class="uk-panel"><div class="uk-card uk-card-default"><div class="uk-card-header"><div class="uk-grid-small" uk-grid><div class="uk-width-auto"><img id="img" src="' + editeurs[i].logoEditeur + '"></div>'
                     + '<div class="uk-width-expand uk-text-center"><h3 class="uk-card-title uk-margin-remove-bottom">' + editeurs[i].nomEditeur + '</h3><p class="uk-margin-remove-top">' + editeurs[i].anneeCreation +'</p></div></div></div>'
-                    + '<div class="uk-card-footer uk-text-center">'
-                    + '<a  class="uk-button  uk-margin-small-right lien" uk-icon="pencil" uk-toggle></a>'
-                    + '<a  class="uk-button  uk-margin-small-right lien" uk-icon="trash" uk-toggle></a>'
+                    + '<div id="card-footer-editeur' + editeurs[i].idEditeur + '"class="uk-card-footer uk-text-center">'
                     + '</div></div></div></div></li>'))
+                      // $('#card-footer-editeur' + editeurs[i].idEditeur)
+                      // .append($('<a class="uk-icon-button  uk-margin-small-right lien" uk-icon="trash" uk-toggle></a>').on("click",delEditeur(editeurs[i])))
+                      // $('#card-footer-editeur' + editeurs[i].idEditeur)
+                      // .append($('<a class="uk-icon-button  uk-margin-small-right lien" uk-icon="pencil" uk-toggle></a>'))
                   }
                   if (editeurs.length == 0){
                     $('#editeurs').append($('<b>Aucun éditeur à afficher !</b>'))
@@ -68,7 +68,7 @@ $(function() {
   $("#tools #addEditeur").on("click", formEditeur);
   $("#tools #details").on("click", fillFormJeu);
 
-  function Jeu(nomJeu, nomGenre, anneeJeu, nomEditeur, descriptionJeu, iconeJeu, imageJeu,   urlTrailer){
+  function Jeu(nomJeu, nomGenre, anneeJeu, nomEditeur, descriptionJeu, iconeJeu, imageJeu, urlTrailer){
       this.nomJeu = nomJeu;
       this.nomGenre = nomGenre;
       this.anneeJeu = anneeJeu;
@@ -148,6 +148,7 @@ $(function() {
           console.log(err)
         }
       });
+      refreshJeuList()
     }
 
     function formEditeur(){
@@ -187,7 +188,7 @@ $(function() {
           console.log(err)
         }
       });
-      refreshJeuList();
+      refreshEditeurList();
     }
 
     function details(event){
@@ -226,18 +227,27 @@ $(function() {
           return 'error';
       }
     }
-    function delTask(){
-      if ($("#currentJeu .nomJeu").val()){
-          console.log("Suppr");
-      }
+
+    function delJeu(jeu){
       $.ajax({
-        url:$("#currentJeu .nomJeu").val(),
+        url:"http://localhost:5000/jeux/" + jeu.idJeu,
         type:'DELETE',
         dataType:'json',
         success:function(msg){
-          window.alert("La tâche a été supprimée ");
-          refreshTaskList();
+          window.alert("Le jeu a été supprimé ");
+          refreshJeuList();
         }
       })
   }
+  // function delEditeur(editeur){
+  //   $.ajax({
+  //     url:"http://localhost:5000/editeurs/" + editeur.idEditeur,
+  //     type:'DELETE',
+  //     dataType:'json',
+  //     success:function(msg){
+  //       window.alert("Le jeu a été supprimé ");
+  //       refreshEditeurList();
+  //     }
+  //   })
+  // }
 });
