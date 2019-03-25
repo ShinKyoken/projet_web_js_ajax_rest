@@ -24,6 +24,15 @@ $(function() {
                   $('#jeux').append($('<b>Aucun jeu à afficher !</b>'))
                 }
                 $(".lien").removeClass("uk-icon");
+                    .append($('<li><div class="uk-panel"><div class="uk-card uk-card-default"><div class="uk-card-header"><div class="uk-grid-small" uk-grid=""><div class="uk-width-auto"><img class="imageJeu" src="' + jeux[i].iconeJeu + '"></div>'
+                    + '<div class="uk-width-expand uk-text-center"><h3 class="uk-card-title uk-margin-remove-bottom">' + jeux[i].nomJeu + '</h3><p class="uk-margin-remove-top">' + jeux[i].nomEditeur + ', ' + jeux[i].anneeJeu + ', ' + jeux[i].nomGenre + '</p></div></div></div>'
+                    + '<div class="uk-card-footer uk-text-center"><a class="uk-icon-button uk-margin-small-right"  href="#modal-sections-'+ jeux[i].idJeu + '" uk-icon="plus-circle" uk-toggle></a><div id="modal-sections-'+ jeux[i].idJeu +'" uk-modal><div class="uk-modal-dialog"><button class="uk-modal-close-default" type="button" uk-close></button><div class="uk-modal-header"><h2 class="uk-modal-title uk-text-center">' + jeux[i].nomJeu +'</h2></div>'
+                    + '<div class="uk-modal-body"><img class="uk-align-center" width="300" height="500"src="' + jeux[i].imageJeu + '"/><p>' + jeux[i].descriptionJeu + '</p></div><div class="uk-modal-footer uk-text-right"><button class="uk-button uk-button-default uk-modal-close" type="button">retour</button></div></div></div>'
+                    + '<a href="#modal-media-youtube-' + jeux[i].idJeu + '" class="uk-icon-button  uk-margin-small-right" uk-icon="youtube" uk-toggle></a>'
+                    + '<a class="uk-icon-button  uk-margin-small-right" uk-icon="pencil" uk-toggle></a>'
+                    + '<a class="uk-icon-button  uk-margin-small-right" uk-icon="trash" uk-toggle></a>'
+                    + '<div id="modal-media-youtube-' + jeux[i].idJeu + '" class="uk-flex-top" uk-modal><div class="uk-modal-dialog uk-width-auto uk-margin-auto-vertical"><button class="uk-modal-close-outside" type="button" uk-close></button>' + jeux[i].urlTrailer + '</div></div></div></div></div></li>'))
+                }
               },
             error: function(req, status, err) {
               $("#jeux").html("<b>Impossible de récupérer les jeux  !</b>");
@@ -31,7 +40,7 @@ $(function() {
           });
         }
       window.onload = refreshJeuList()
-      
+
       function refreshEditeurList(){
       $("#editeurs").empty();
           $.ajax({
@@ -62,11 +71,41 @@ $(function() {
                 $("#editeurs").html("<b>Impossible de récupérer les éditeurs !</b>");
               }
             });
-          } 
+          }
       window.onload = refreshEditeurList()
+
+      // function refreshEditeurList(){
+      //   $("#editeurs").empty();
+      //   $.ajax({
+      //       url: "http://localhost:5000/editeurs",
+      //       type: "GET",
+      //       dataType : "json",
+      //       success: function(editeurs) {
+      //           $('#editeurs').empty();
+      //           for(let i=0;i<editeurs.length;i++){
+      //               $('#editeurs')
+      //               .append($('<li><div class="uk-panel"><div class="uk-card uk-card-default"><div class="uk-card-header"><div class="uk-grid-small" uk-grid><div class="uk-width-auto"><img width="80" height="80" src="' + editeurs[i].logoEditeur + '"></div>'
+      //               + '<div class="uk-width-expand uk-text-center"><h3 class="uk-card-title uk-margin-remove-bottom">' + jeux[i].nomJeu + '</h3></div><div><p class="uk-text-meta uk-margin-remove-top">' + jeux[i].nomEditeur + ', ' + jeux[i].anneeJeu + ', ' + jeux[i].nomGenre + '</p></div></div></div>'
+      //               + '</div><div class="uk-card-footer uk-text-center"><a class="uk-icon-button uk-margin-small-right"  href="#modal-sections-'+ jeux[i].idJeu + '" uk-icon="plus-circle" uk-toggle></a><div id="modal-sections-'+ jeux[i].idJeu +'" uk-modal><div class="uk-modal-dialog"><button class="uk-modal-close-default" type="button" uk-close></button><div class="uk-modal-header"><h2 class="uk-modal-title uk-text-center">' + jeux[i].nomJeu +'</h2></div>'
+      //               + '<div class="uk-modal-body"><img class="uk-align-center" width="300" height="500"src="' + jeux[i].imageJeu + '"/><p>' + jeux[i].descriptionJeu + '</p></div><div class="uk-modal-footer uk-text-right"><button class="uk-button uk-button-default uk-modal-close" type="button">retour</button></div></div></div>'
+      //               + '<a href="#modal-media-youtube-' + jeux[i].idJeu + '" class="uk-icon-button uk-margin-small-right" uk-icon="youtube" uk-toggle></a>'
+      //               + '<a class="uk-icon-button uk-margin-small-right" uk-icon="pencil" uk-toggle></a>'
+      //               + '<a class="uk-icon-button uk-margin-small-right" uk-icon="trash" uk-toggle></a>'
+      //               + '<div id="modal-media-youtube-' + jeux[i].idJeu + '" class="uk-flex-top" uk-modal><div class="uk-modal-dialog uk-width-auto uk-margin-auto-vertical"><button class="uk-modal-close-outside" type="button" uk-close></button>' + jeux[i].urlTrailer + '</div></div></div></div></div></li>'))
+      //           }
+      //           if (jeux.length == 0){
+      //             $('#editeurs').append($('<b>Aucun éditeur à afficher !</b>'))
+      //           }
+      //         },
+      //       error: function(req, status, err) {
+      //         $("#editeurs").html("<b>Impossible de récupérer les éditeurs !</b>");
+      //       }
+      //     });
+      //   }
 
   $("#tools #addJeu").on("click", formJeu);
   $("#tools #addEditeur").on("click", formEditeur);
+  $("#tools #details").on("click", fillFormJeu);
 
   function Jeu(nomJeu, nomGenre, anneeJeu, nomEditeur, descriptionJeu, iconeJeu, imageJeu,   urlTrailer){
       this.nomJeu = nomJeu;
@@ -205,4 +244,30 @@ $(function() {
         }
       })
   }
+
+    function details(event){
+        $("#currentJeu").empty();
+        formTask();
+        fillFormTask(event.data);
+        }
+
+    function fillFormJeu(jeu){
+      formJeu()
+      $("#currentJeu .nomJeu").val(jeu.nomJeu),
+      $("#currentJeu .nomGenre").val(jeu.nomGenre),
+      $("#currentJeu .anneeJeu").val(jeu.anneeJeu),
+      $("#currentJeu .nomEditeur").val(jeu.nomEditeur),
+      $("#currentJeu .descriptionJeu").val(jeu.description),
+      $("#currentJeu .iconeJeu").val(jeu.iconeJeu),
+      $("#currentJeu .imageJeu").val(jeu.imageJeu),
+      $("#currentJeu .urlTrailer").val(jeu.urlTrailer)
+    }
+
+    function affiche(x) {
+      console.log(x);
+    }
+    function fillDetailsJeu(jeu){
+      $('#cardFooter-' + jeu.idJeu)
+            .append($('<span><input type="button" class="uk-button uk-button-primary boutonDetails" value="Modifier"><br></span>').on("click",fillFormJeu(jeu)))
+    }
 });
