@@ -166,8 +166,9 @@ def jeu_update(idJeu):
 
     return jeu_schema.jsonify(jeu)
 
-@app.route("/jeux/<idJeu>", methods = ["DELETE"])
+@app.route("/jeux/<idJeu>/supprimerJeu", methods = ["DELETE"])
 def jeu_delete(idJeu):
+    print("Ouais")
     jeu = JEU.query.get(idJeu)
 
     db.session.delete(jeu)
