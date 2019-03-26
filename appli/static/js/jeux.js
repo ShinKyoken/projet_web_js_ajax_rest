@@ -19,7 +19,7 @@ $(function() {
                     $('#card-footer-jeu' + jeux[i].idJeu)
                     .append($('<a class="uk-icon-button uk-margin-small-right" uk-icon="pencil"></a>'))
                     $('#card-footer-jeu' + jeux[i].idJeu)
-                    .append($('<a class="uk-icon-button uk-margin-small-right" uk-icon="trash"></a>').click(delJeu(jeux[i])))
+                    .append($('<input type="button" class="uk-icon-button uk-margin-small-right" uk-icon="trash">').on("click",delJeu(jeux[i].idJeu)))
 
                 }
 
@@ -228,9 +228,9 @@ $(function() {
       }
     }
 
-    function delJeu(jeu){
+    function delJeu(idJeu){
       $.ajax({
-        url:"http://localhost:5000/jeux/" + jeu.idJeu,
+        url:"http://localhost:5000/jeux/" + idJeu + "/supprimerJeu",
         type:'DELETE',
         dataType:'json',
         success:function(msg){
