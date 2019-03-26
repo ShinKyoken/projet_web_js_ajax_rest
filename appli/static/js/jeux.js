@@ -23,7 +23,10 @@ $(function() {
                     $('#card-footer-jeu' + jeux[i].idJeu)
                     .append($('<a class="uk-icon-button uk-margin-small-right" uk-icon="trash" id="btn_del' + jeux[i].idJeu + '"></a>'))
                     $("#btn_del" + jeux[i].idJeu).on("click", function() {
-                      delJeu(jeux[i].idJeu)
+                      check=window.confirm("Voulez vous vraiment supprimer ce jeu ?")
+                      if(check){
+                        delJeu(jeux[i].idJeu);
+                      }
                     });
                 }
                 if (jeux.length == 0){
@@ -55,7 +58,11 @@ $(function() {
                       $('#card-footer-editeur' + editeurs[i].idEditeur)
                       .append($('<a class="uk-icon-button  uk-margin-small-right lien" uk-icon="trash" uk-toggle id="btn_delEd' + editeurs[i].idEditeur + '"></a>'))
                       $("#btn_delEd" + editeurs[i].idEditeur).on("click", function() {
-                        delEditeur(editeurs[i].idEditeur)
+                        check=window.confirm("Voulez vous vraiment supprimer cet éditeur et les jeux qui y sont associés ?")
+                        if (check){
+                          delEditeur(editeurs[i].idEditeur);
+                        }
+                        refreshEditeurList();
                       });
                   }
                   if (editeurs.length == 0){
