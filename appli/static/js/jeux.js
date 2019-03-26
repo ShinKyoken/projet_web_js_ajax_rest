@@ -1,4 +1,6 @@
 $(function() {
+  window.onload = refreshEditeurList()
+  window.onload = refreshJeuList()
 
     function refreshJeuList(){
         $("#jeux").empty();
@@ -23,11 +25,7 @@ $(function() {
                     $("#btn_del" + jeux[i].idJeu).on("click", function() {
                       delJeu(jeux[i].idJeu)
                     });
-
-
                 }
-
-
                 if (jeux.length == 0){
                   $('#jeux').append($('<b>Aucun jeu à afficher !</b>'))
                 }
@@ -37,7 +35,6 @@ $(function() {
             }
           });
         }
-      window.onload = refreshJeuList()
 
       function refreshEditeurList(){
       $("#editeurs").empty();
@@ -56,10 +53,10 @@ $(function() {
                       $('#card-footer-editeur' + editeurs[i].idEditeur)
                       .append($('<a class="uk-icon-button  uk-margin-small-right lien" uk-icon="pencil" uk-toggle></a>'))
                       $('#card-footer-editeur' + editeurs[i].idEditeur)
-                      .append($('<a class="uk-icon-button  uk-margin-small-right lien" uk-icon="trash" uk-toggle id="btn_delEd' + editeurs[i].idEditeur + '"></a>').on("click",delEditeur(editeurs[i])))
-                      // $("#btn_delEd" + editeurs[i].idEditeur).on("click", function() {
-                      //   delEditeur(editeurs[i].idEditeur)
-                      // });
+                      .append($('<a class="uk-icon-button  uk-margin-small-right lien" uk-icon="trash" uk-toggle id="btn_delEd' + editeurs[i].idEditeur + '"></a>'))
+                      $("#btn_delEd" + editeurs[i].idEditeur).on("click", function() {
+                        delEditeur(editeurs[i].idEditeur)
+                      });
                   }
                   if (editeurs.length == 0){
                     $('#editeurs').append($('<b>Aucun éditeur à afficher !</b>'))
@@ -70,7 +67,6 @@ $(function() {
               }
             });
           }
-      window.onload = refreshEditeurList()
 
   $("#tools #addJeu").on("click", formJeu);
   $("#tools #addEditeur").on("click", formEditeur);
@@ -147,7 +143,6 @@ $(function() {
         data : JSON.stringify(jeu),
         dataType : 'json',
         success: function(msg){
-          refreshEditeurList();
           refreshJeuList()
           $("#currentJeu").empty();
           alert('Save Success');
@@ -171,7 +166,7 @@ $(function() {
 
               .append($('<span><input type="button" class="uk-button uk-button-primary" value="Sauvegarder l\'éditeur"><br></span>').on("click", saveNewEditeur))
               .append($('</form></div>'));
-    }
+      s}
 
 
     function saveNewEditeur(){
@@ -190,13 +185,14 @@ $(function() {
         dataType : 'json',
         success: function(msg){
           alert('Save Success');
+          refreshEditeurList();
+          $("#currentEditeur").empty();
         },
         error: function(err){
           alert('Save Error');
           console.log(err)
         }
       });
-      refreshEditeurList();
     }
 
     function details(event){
@@ -243,9 +239,9 @@ $(function() {
         dataType:'json',
         success:function(msg){
           window.alert("Le jeu a été supprimé ");
+          refreshJeuList();
         }
       });
-      refreshJeuList();
   }
 
   function delEditeur(id){
@@ -254,10 +250,12 @@ $(function() {
       type:'DELETE',
       dataType:'json',
       success:function(msg){
-        window.alert("Le jeu a été supprimé ");
+        window.alert("L'éditeur a été supprimé");
+        refreshEditeurList();
+        refreshJeuList();
       }
     });
-    refreshEditeurList();
   }
+
 
 });
