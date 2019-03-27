@@ -38,3 +38,8 @@ textarea{
   width: 5em;
   height: 5em;
 }
+
+#currentJeu{
+  margin-left:5vw;
+  margin-right:5vw;
+}
