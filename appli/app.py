@@ -95,6 +95,11 @@ def editeur_update(idEditeur):
 @app.route("/editeurs/<idEditeur>", methods = ["DELETE"])
 def editeur_delete(idEditeur):
     editeur = EDITEUR.query.get(idEditeur)
+    listeJeux = JEU.query.filter_by(nomEditeur = editeur.nomEditeur).all()
+
+    for jeu in listeJeux:
+        db.session.delete(jeu)
+        db.session.commit()
 
     db.session.delete(editeur)
     db.session.commit()
@@ -168,6 +173,7 @@ def jeu_update(idJeu):
 
 @app.route("/jeux/<idJeu>", methods = ["DELETE"])
 def jeu_delete(idJeu):
+    print("Ouais")
     jeu = JEU.query.get(idJeu)
 
     db.session.delete(jeu)
