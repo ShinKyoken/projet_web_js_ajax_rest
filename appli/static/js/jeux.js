@@ -21,17 +21,7 @@ $(function() {
                     $('#card-footer-jeu' + jeux[i].idJeu)
                     .append($('<a class="uk-icon-button uk-margin-small-right" uk-icon="pencil" id="btn_modif'+ jeux[i].idJeu + '"></a>'))
                     $("#btn_modif" + jeux[i].idJeu).on("click", function() {
-                      formJeu();
-                      $("#currentJeu .nomJeu").val(jeux[i].nomJeu),
-                      console.log(jeux[i].nomJeu);
-                      $("#currentJeu .nomGenre").val(jeux[i].nomGenre),
-                      $("#currentJeu .anneeJeu").val(jeux[i].anneeJeu),
-                      $("#currentJeu .nomEditeur").val(jeux[i].nomEditeur),
-                      $("#currentJeu .descriptionJeu").val(jeux[i].description),
-                      $("#currentJeu .iconeJeu").val(jeux[i].iconeJeu),
-                      $("#currentJeu .imageJeu").val(jeux[i].imageJeu),
-                      $("#currentJeu .urlTrailer").val(jeux[i].urlTrailer)
-
+                      modifJeu(jeux[i].idJeu)
                     });
                     $('#card-footer-jeu' + jeux[i].idJeu)
                     .append($('<a class="uk-icon-button uk-margin-small-right" uk-icon="trash" id="btn_del' + jeux[i].idJeu + '"></a>'))
@@ -90,7 +80,6 @@ $(function() {
 
   $("#tools #addJeu").on("click", formJeu);
   $("#tools #addEditeur").on("click", formEditeur);
-  $("#tools #details").on("click", fillFormJeu);
 
   function Jeu(nomJeu, nomGenre, anneeJeu, nomEditeur, descriptionJeu, iconeJeu, imageJeu, urlTrailer){
       this.nomJeu = nomJeu;
@@ -124,7 +113,7 @@ $(function() {
               listeEditeurs += '<option>' + editeurs[i].nomEditeur + '</option>';
             }
           }
-          // $("#currentJeu").empty();
+          $("#currentJeu").empty();
           $("#currentEditeur").empty();
           $("#currentJeu")
               .append($('<div class="container currentJeu uk-margin"><form class="uk-form-horizontal">'))
@@ -223,25 +212,8 @@ $(function() {
       });
     }
 
-    function fillFormJeu(jeu){
-      formJeu();
-      $("#currentJeu .nomJeu").val(jeu.nomJeu),
-      console.log(jeu.nomJeu);
-      $("#currentJeu .nomGenre").val(jeu.nomGenre),
-      $("#currentJeu .anneeJeu").val(jeu.anneeJeu),
-      $("#currentJeu .nomEditeur").val(jeu.nomEditeur),
-      $("#currentJeu .descriptionJeu").val(jeu.description),
-      $("#currentJeu .iconeJeu").val(jeu.iconeJeu),
-      $("#currentJeu .imageJeu").val(jeu.imageJeu),
-      $("#currentJeu .urlTrailer").val(jeu.urlTrailer)
-    }
-
     function affiche(x) {
       console.log(x);
-    }
-    function fillDetailsJeu(jeu){
-      $('#cardFooter-' + jeu.idJeu)
-            .append($('<span><input type="button" class="uk-button uk-button-primary boutonDetails" value="Modifier"><br></span>').on("click",fillFormJeu(jeu)))
     }
 
     function getId(url) {
@@ -276,6 +248,93 @@ $(function() {
         window.alert("L'éditeur a été supprimé");
         refreshEditeurList();
         refreshJeuList();
+      }
+    });
+  }
+
+
+  function modifJeu(idJeu) {
+    var listeEditeurs = ''
+    $.ajax({
+      url: "http://localhost:5000/editeurs",
+      type: "GET",
+      dataType: "json",
+      success: function (editeurs) {
+        for (var i = 0; i < editeurs.length; i++) {
+          if (editeurs[i].nomEditeur == idJeu.nomEditeur) {
+            listeEditeurs += '<option autofocus>' + editeurs[i].nomEditeur + '</option>';
+          }
+          else {
+            listeEditeurs += '<option>' + editeurs[i].nomEditeur + '</option>';
+          }
+        }
+      },
+      error: function (req, status, err) {
+        console.log("Erreur lors du chargement des editeurs.");
+      }
+    });
+
+    $.ajax({
+      url: "http://localhost:5000/jeux/" + idJeu,
+      type: "GET",
+      dataType: "json",
+      success: function (jeu) {
+        $("#currentJeu").empty();
+        $("#currentEditeur").empty();
+        $("#currentJeu")
+          .append($('<div class="container currentJeu uk-margin"><form class="uk-form-horizontal">'))
+          .append($('<div class="uk-column-1-2">'
+            + '<div><label class="uk-form-label uk-label uk-width-1-2 uk-text-center" for="form-horizontal-text">Nom du Jeu</label><div class="uk-form-controls"><input class="uk-input nomJeuUp"  id="form-horizontal-text" type="text" value="'+ jeu.nomJeu + '"></div></div>'
+            + '<div class="uk-margin-medium"><label class="uk-form-label uk-width-1-2 uk-label uk-text-center" for="form-horizontal-text">Genre du Jeu</label><div class="uk-form-controls"><input class="uk-input nomGenreUp" id="form-horizontal-text" type="text" value="' + jeu.nomGenre + '"></div></div>'
+            + '</div>'))
+          .append($('<div class="uk-column-1-2">'
+            + '<div class="uk-margin-medium"><label class="uk-form-label uk-width-1-2 uk-label uk-text-center" for="form-horizontal-text">Icone du Jeu</label><div class="uk-form-controls"><input class="uk-input iconeJeuUp" id="form-horizontal-text" type="text" value="' + jeu.iconeJeu + '"></div></div>'
+            + '<div class="uk-margin-medium"><label class="uk-form-label uk-width-1-2 uk-label uk-text-center" for="form-horizontal-text">Image du Jeu</label><div class="uk-form-controls"><input class="uk-input imageduJeuUp" id="form-horizontal-text" type="text" value="' + jeu.imageJeu + '"></div></div>'
+            + '</div>'))
+          .append($('<div class="uk-column-1-2">'
+            + '<div class="uk-margin-medium"><label class="uk-form-label uk-width-1-2 uk-label uk-text-center" for="form-horizontal-text">Trailer du Jeu</label><div class="uk-form-controls"><input class="uk-input urlTrailerUp" id="form-horizontal-text" type="text" value="' + jeu.urlTrailer + '"></div></div>'
+            + '<div class="uk-margin-medium"><label class="uk-form-label uk-width-1-2 uk-label uk-text-center" for="form-horizontal-text">Description du Jeu</label><div class="uk-form-controls"><input class="uk-input descriptionJeuUp" id="form-horizontal-text" type="text" value="' + jeu.descriptionJeu + '"></div></div>'
+            + '</div>'))
+          .append($('<div class="uk-column-1-2 uk-margin-bottom">'
+            + '<div><label class="uk-form-label uk-width-1-2 uk-label uk-text-center" for="form-horizontal-select">Éditeur du Jeu</label><div class="uk-form-controls"><select class="uk-select nomEditeurUp" id="form-horizontal-select">' + listeEditeurs + '</select></div></div>'
+            + '<div><label class="uk-form-label uk-width-1-2 uk-label uk-text-center" for="form-horizontal-text">Année de création du Jeu</label><div class="uk-form-controls"><input class="uk-input anneeJeuUp" id="form-horizontal-text" type="number" value="' + jeu.anneeJeu + '"></div></div>'
+            + '</div>'))
+          .append($('<input type="button" class="uk-button uk-button-primary" value="Modifier le Jeu"><br>').on("click", function() {
+            updateJeu(jeu.idJeu);
+          }))
+          .append($('</form></div>'));
+      },
+      error: function (req, status, err) {
+        console.log("Erreur lors du chargement de la modif du jeu.");
+      }
+    });
+  }
+
+  function updateJeu(idJeu) {
+    var jeu = new Jeu(
+      $("#currentJeu .nomJeuUp").val(),
+      $("#currentJeu .nomGenreUp").val(),
+      $("#currentJeu .anneeJeuUp").val(),
+      $("#currentJeu .nomEditeurUp").val(),
+      $("#currentJeu .descriptionJeuUp").val(),
+      $("#currentJeu .iconeJeuUp").val(),
+      $("#currentJeu .imageduJeuUp").val(),
+      getId($("#currentJeu .urlTrailerUp").val())
+    );
+    $.ajax({
+      url: "http://localhost:5000/jeux/" + idJeu,
+      type: 'PUT',
+      contentType: 'application/json',
+      data: JSON.stringify(jeu),
+      dataType: 'json',
+      success: function (msg) {
+        refreshJeuList()
+        $("#currentJeu").empty();
+        alert('Jeu modifié');
+      },
+      error: function (err) {
+        alert('Erreur');
+        console.log(err)
       }
     });
   }
