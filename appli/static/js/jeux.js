@@ -23,7 +23,10 @@ $(function() {
                     $('#card-footer-jeu' + jeux[i].idJeu)
                     .append($('<a class="uk-icon-button uk-margin-small-right" uk-icon="trash" id="btn_del' + jeux[i].idJeu + '"></a>'))
                     $("#btn_del" + jeux[i].idJeu).on("click", function() {
-                      delJeu(jeux[i].idJeu)
+                      check=window.confirm("Voulez vous vraiment supprimer ce jeu ?")
+                      if(check){
+                        delJeu(jeux[i].idJeu);
+                      }
                     });
                 }
                 if (jeux.length == 0){
@@ -55,7 +58,11 @@ $(function() {
                       $('#card-footer-editeur' + editeurs[i].idEditeur)
                       .append($('<a class="uk-icon-button  uk-margin-small-right lien" uk-icon="trash" uk-toggle id="btn_delEd' + editeurs[i].idEditeur + '"></a>'))
                       $("#btn_delEd" + editeurs[i].idEditeur).on("click", function() {
-                        delEditeur(editeurs[i].idEditeur)
+                        check=window.confirm("Voulez vous vraiment supprimer cet éditeur et les jeux qui y sont associés ?")
+                        if (check){
+                          delEditeur(editeurs[i].idEditeur);
+                        }
+                        refreshEditeurList();
                       });
                   }
                   if (editeurs.length == 0){
@@ -108,15 +115,23 @@ $(function() {
           $("#currentEditeur").empty();
           $("#currentJeu")
               .append($('<div class="container currentJeu uk-margin"><form class="uk-form-horizontal">'))
-              .append($('<div><label class="uk-form-label uk-label uk-width-1-4 uk-text-center" for="form-horizontal-text">Nom du Jeu</label><div class="uk-form-controls"><input class="uk-input uk-width-1-2 nomJeu"  id="form-horizontal-text" type="text" placeholder="Minecraft, League of Legends, ..."></div></div>'))
-              .append($('<div class="uk-margin-medium"><label class="uk-form-label uk-label uk-width-1-4 uk-text-center" for="form-horizontal-text">Genre du Jeu</label><div class="uk-form-controls"><input class="uk-input uk-width-1-2 nomGenre" id="form-horizontal-text" type="text" placeholder="MOBA, Survie, ...  "></div></div>'))
-              .append($('<div class="uk-margin-medium"><label class="uk-form-label uk-label uk-width-1-4 uk-text-center" for="form-horizontal-text">Icone du Jeu</label><div class="uk-form-controls"><input class="uk-input uk-width-1-2 iconeJeu" id="form-horizontal-text" type="text" placeholder="Url de l icone ..."></div></div>'))
-              .append($('<div class="uk-margin-medium"><label class="uk-form-label uk-label uk-width-1-4 uk-text-center" for="form-horizontal-text">Image du Jeu</label><div class="uk-form-controls"><input class="uk-input uk-width-1-2 imageduJeu" id="form-horizontal-text" type="text" placeholder="Url de l image ..."></div></div>'))
-              .append($('<div class="uk-margin-medium"><label class="uk-form-label uk-label uk-width-1-4 uk-text-center" for="form-horizontal-text">Trailer du Jeu</label><div class="uk-form-controls"><input class="uk-input uk-width-1-2 urlTrailer" id="form-horizontal-text" type="text" placeholder="Url du trailer ..."></div></div>'))
-              .append($('<div class="uk-margin-medium"><label class="uk-form-label uk-label uk-width-1-4 uk-text-center" for="form-horizontal-text">Description du Jeu</label><div class="uk-form-controls"><input class="uk-input uk-width-1-2 descriptionJeu" id="form-horizontal-text" type="text" placeholder="Description du jeu ..."></div></div>'))
-              .append($('<div class="uk-margin-medium"><label class="uk-form-label uk-label uk-width-1-4 uk-text-center" for="form-horizontal-select">Éditeur du Jeu</label><div class="uk-form-controls"><select class="uk-select uk-width-1-2 nomEditeur" id="form-horizontal-select">' + listeEditeurs  + '</select></div></div>'))
-              .append($('<div class="uk-margin-medium"><label class="uk-form-label uk-label uk-width-1-4 uk-text-center" for="form-horizontal-text">Année de création du Jeu</label><div class="uk-form-controls"><input class="uk-input uk-width-1-2 anneeJeu" id="form-horizontal-text" type="number" value="2019"></div></div>'))
-              .append($('<span><input type="button" class="uk-button uk-button-primary" value="Sauvegarder le Jeu"><br></span>').on("click", saveNewJeu))
+              .append($('<div class="uk-column-1-2">'
+               + '<div><label class="uk-form-label uk-label uk-width-1-2 uk-text-center" for="form-horizontal-text">Nom du Jeu</label><div class="uk-form-controls"><input class="uk-input nomJeu"  id="form-horizontal-text" type="text" placeholder="Minecraft, League of Legends, ..."></div></div>'
+               + '<div class="uk-margin-medium"><label class="uk-form-label uk-width-1-2 uk-label uk-text-center" for="form-horizontal-text">Genre du Jeu</label><div class="uk-form-controls"><input class="uk-input nomGenre" id="form-horizontal-text" type="text" placeholder="MOBA, Survie, ...  "></div></div>'
+               + '</div>'))
+              .append($('<div class="uk-column-1-2">'
+               + '<div class="uk-margin-medium"><label class="uk-form-label uk-width-1-2 uk-label uk-text-center" for="form-horizontal-text">Icone du Jeu</label><div class="uk-form-controls"><input class="uk-input iconeJeu" id="form-horizontal-text" type="text" placeholder="Url de l icone ..."></div></div>'
+               + '<div class="uk-margin-medium"><label class="uk-form-label uk-width-1-2 uk-label uk-text-center" for="form-horizontal-text">Image du Jeu</label><div class="uk-form-controls"><input class="uk-input imageduJeu" id="form-horizontal-text" type="text" placeholder="Url de l image ..."></div></div>'
+               + '</div>'))
+              .append($('<div class="uk-column-1-2">'
+               + '<div class="uk-margin-medium"><label class="uk-form-label uk-width-1-2 uk-label uk-text-center" for="form-horizontal-text">Trailer du Jeu</label><div class="uk-form-controls"><input class="uk-input urlTrailer" id="form-horizontal-text" type="text" placeholder="Url du trailer ..."></div></div>'
+               + '<div class="uk-margin-medium"><label class="uk-form-label uk-width-1-2 uk-label uk-text-center" for="form-horizontal-text">Description du Jeu</label><div class="uk-form-controls"><input class="uk-input descriptionJeu" id="form-horizontal-text" type="text" placeholder="Description du jeu ..."></div></div>'
+               + '</div>'))
+              .append($('<div class="uk-column-1-2 uk-margin-bottom">'
+               +'<div><label class="uk-form-label uk-width-1-2 uk-label uk-text-center" for="form-horizontal-select">Éditeur du Jeu</label><div class="uk-form-controls"><select class="uk-select nomEditeur" id="form-horizontal-select">' + listeEditeurs  + '</select></div></div>'
+               +'<div><label class="uk-form-label uk-width-1-2 uk-label uk-text-center" for="form-horizontal-text">Année de création du Jeu</label><div class="uk-form-controls"><input class="uk-input anneeJeu" id="form-horizontal-text" type="number" value="2019"></div></div>'
+               + '</div>'))
+              .append($('<input type="button" class="uk-button uk-button-primary" value="Sauvegarder le Jeu"><br>').on("click", saveNewJeu))
               .append($('</form></div>'));
         },
         error: function(req, status, err) {
