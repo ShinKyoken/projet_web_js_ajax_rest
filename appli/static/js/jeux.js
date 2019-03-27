@@ -1,6 +1,7 @@
 $(function() {
   window.onload = refreshEditeurList()
   window.onload = refreshJeuList()
+  window.onload = disableButton();
 
     function refreshJeuList(){
         $("#jeux").empty();
@@ -74,6 +75,7 @@ $(function() {
                   if (editeurs.length == 0){
                     $('#editeurs').append($('<b>Aucun éditeur à afficher !</b>'))
                   }
+                  disableButton();
                 },
               error: function(req, status, err) {
                 $("#editeurs").html("<b>Impossible de récupérer les éditeurs !</b>");
@@ -100,7 +102,24 @@ $(function() {
     this.anneeCreation = anneeCreation;
     this.logoEditeur = logoEditeur;
   }
-
+  function disableButton(){
+    $.ajax({
+        url: "http://localhost:5000/editeurs",
+        type: "GET",
+        dataType : "json",
+        success: function(editeurs) {
+          if (editeurs.length == 0){
+            $("#addJeu").prop("disabled",true);
+          }
+          else{
+            $("#addJeu").prop("disabled",false);
+          }
+        },
+        error: function(req, status, err) {
+          $("#addJeu").prop("disabled",true);
+        }
+      });
+    }
     function formJeu(){
       $.ajax({
         url: "http://localhost:5000/editeurs",
@@ -121,7 +140,7 @@ $(function() {
           $("#currentJeu")
               .append($('<div class="container currentJeu uk-margin"><form class="uk-form-horizontal">'))
               .append($('<div class="uk-column-1-2">'
-               + '<div><label class="uk-form-label uk-label uk-width-1-2 uk-text-center" for="form-horizontal-text">Nom du Jeu</label><div class="uk-form-controls"><input class="uk-input nomJeu"  id="form-horizontal-text" type="text" placeholder="" value=""></div></div>'
+               + '<div><label class="uk-form-label uk-label uk-width-1-2 uk-text-center" for="form-horizontal-text">Nom du Jeu</label><div class="uk-form-controls"><input class="uk-input nomJeu"  id="form-horizontal-text" type="text" placeholder="League of Legends, Minecraft, ..." value=""></div></div>'
                + '<div class="uk-margin-medium"><label class="uk-form-label uk-width-1-2 uk-label uk-text-center" for="form-horizontal-text">Genre du Jeu</label><div class="uk-form-controls"><input class="uk-input nomGenre" id="form-horizontal-text" type="text" placeholder="MOBA, Survie, ...  "></div></div>'
                + '</div>'))
               .append($('<div class="uk-column-1-2">'
@@ -136,9 +155,16 @@ $(function() {
                +'<div><label class="uk-form-label uk-width-1-2 uk-label uk-text-center" for="form-horizontal-select">Éditeur du Jeu</label><div class="uk-form-controls"><select class="uk-select nomEditeur" id="form-horizontal-select">' + listeEditeurs  + '</select></div></div>'
                +'<div><label class="uk-form-label uk-width-1-2 uk-label uk-text-center" for="form-horizontal-text">Année de création du Jeu</label><div class="uk-form-controls"><input class="uk-input anneeJeu" id="form-horizontal-text" type="number" value="2019"></div></div>'
                + '</div>'))
-              .append($('<input type="button" class="uk-button uk-button-primary" value="Sauvegarder le Jeu"><br>').on("click", saveNewJeu))
-              .append($('</form></div>'));
-        },
+              .append($('<input type="button" id="btn_add" class="uk-button uk-button-primary" value="Sauvegarder le Jeu"><br>'))
+              $("#btn_add").on("click",function(){
+                if ($(".nomJeu").val() == "" || $(".imageduJeu").val() == "" || $(".iconeJeu").val() == "" || $(".iconeJeu").val() == "" || $(".urlTrailer").val() == "" || $(".nomGenre").val() == ""){
+                  window.alert("Un ou plusieurs champs du formulaire sont vides !!!");
+                }
+                else{
+                  saveNewJeu();
+                }
+              });
+          },
         error: function(req, status, err) {
           console.log("Erreur lors du chargement des editeurs.");
         }
@@ -184,9 +210,17 @@ $(function() {
               .append($('<div class="uk-margin-medium"><label class="uk-form-label uk-label uk-width-1-4 uk-text-center" for="form-horizontal-text">Année de création</label><div class="uk-form-controls"><input class="uk-input uk-width-1-2 anneeCreation" id="form-horizontal-text" type="number" value="2019"></div></div>'))
               .append($('<div class="uk-margin-medium"><label class="uk-form-label uk-label uk-width-1-4 uk-text-center" for="form-horizontal-text">Logo de l\'éditeur</label><div class="uk-form-controls"><input class="uk-input uk-width-1-2 logoEditeur" id="form-horizontal-text" type="text" placeholder="URL logo"></div></div>'))
 
-              .append($('<span><input type="button" class="uk-button uk-button-primary" value="Sauvegarder l\'éditeur"><br></span>').on("click", saveNewEditeur))
+              .append($('<span><input type="button" id="btn_add_Ed" class="uk-button uk-button-primary" value="Sauvegarder l\'éditeur"><br></span>'))
               .append($('</form></div>'));
-      s}
+              $("#btn_add_Ed").on("click",function(){
+                if($(".nomEditeur").val() == "" || $(".logoEditeur").val() == ""){
+                  window.alert("Un ou plusieurs champs du formulaire sont vides !!!");
+                }
+                else{
+                  saveNewEditeur();
+                }
+              });
+      }
 
 
     function saveNewEditeur(){
@@ -207,6 +241,7 @@ $(function() {
           alert('Save Success');
           refreshEditeurList();
           $("#currentEditeur").empty();
+          disableButton();
         },
         error: function(err){
           alert('Save Error');
@@ -238,6 +273,8 @@ $(function() {
         success:function(msg){
           window.alert("Le jeu a été supprimé ");
           refreshJeuList();
+          $("#currentJeu").empty();
+          $("#currentEditeur").empty();
         }
       });
   }
@@ -248,9 +285,12 @@ $(function() {
       type:'DELETE',
       dataType:'json',
       success:function(msg){
-        window.alert("L'éditeur a été supprimé");
+        window.alert("L'éditeur ainsi que tous ses jeux ont été supprimé");
         refreshEditeurList();
         refreshJeuList();
+        $("#currentJeu").empty();
+        $("#currentEditeur").empty();
+        disableButton();
       }
     });
   }
@@ -302,10 +342,16 @@ $(function() {
             + '<div><label class="uk-form-label uk-width-1-2 uk-label uk-text-center" for="form-horizontal-select">Éditeur du Jeu</label><div class="uk-form-controls"><select class="uk-select nomEditeurUp" id="form-horizontal-select">' + listeEditeurs + '</select></div></div>'
             + '<div><label class="uk-form-label uk-width-1-2 uk-label uk-text-center" for="form-horizontal-text">Année de création du Jeu</label><div class="uk-form-controls"><input class="uk-input anneeJeuUp" id="form-horizontal-text" type="number" value="' + jeu.anneeJeu + '"></div></div>'
             + '</div>'))
-          .append($('<input type="button" class="uk-button uk-button-primary" value="Modifier le Jeu"><br>').on("click", function() {
-            updateJeu(jeu.idJeu);
-          }))
+          .append($('<input type="button" id="btn_update" class="uk-button uk-button-primary" value="Modifier le Jeu"><br>'))
           .append($('</form></div>'));
+          $("#btn_update").on("click", function() {
+            if ($(".nomJeuUp").val() == "" || $(".imageduJeuUp").val() == "" || $(".iconeJeuUp").val() == "" || $(".iconeJeuUp").val() == "" || $(".urlTrailerUp").val() == "" || $(".nomGenreUp").val() == ""){
+              window.alert("Un ou plusieurs champs du formulaire sont vides !!!");
+            }
+            else{
+              updateJeu(jeu.idJeu);
+            }
+          });
       },
       error: function (req, status, err) {
         console.log("Erreur lors du chargement de la modif du jeu.");
@@ -358,11 +404,18 @@ $(function() {
         .append($('<div class="uk-margin-medium"><label class="uk-form-label uk-label uk-width-1-4 uk-text-center" for="form-horizontal-text">Année de création</label><div class="uk-form-controls"><input class="uk-input uk-width-1-2 anneeCreationUp" id="form-horizontal-text" type="number" value="'+editeur.anneeCreation+'"></div></div>'))
         .append($('<div class="uk-margin-medium"><label class="uk-form-label uk-label uk-width-1-4 uk-text-center" for="form-horizontal-text">Logo de l\'éditeur</label><div class="uk-form-controls"><input class="uk-input uk-width-1-2 logoEditeurUp" id="form-horizontal-text" type="text" placeholder="URL logo" value="'+editeur.logoEditeur+'"></div></div>'))
 
-        .append($('<span><input type="button" class="uk-button uk-button-primary" value="Modifier l\'éditeur"><br></span>').on("click",function(){
-          updateEditeur(editeur.idEditeur);
-        } ))
-        .append($('</form></div>'));
-      },
+        .append($('<span><input type="button" id="btn_update_Editeur" class="uk-button uk-button-primary" value="Modifier l\'éditeur"><br></span>'))
+        .append($('</form></div>'))
+
+        $("#btn_update_Editeur").on("click",function(){
+          if($(".nomEditeurUp").val() == "" || $(".logoEditeurUp").val() == ""){
+            window.alert("Un ou plusieurs champs du formulaire sont vides !!!");
+          }
+          else{
+            updateEditeur(editeur.idEditeur);;
+          }
+          });
+        },
       error: function (req, status, err) {
         console.log("Erreur lors du chargement de la modif de l'éditeur.");
       }
