@@ -57,7 +57,10 @@ $(function() {
                     + '<div id="card-footer-editeur' + editeurs[i].idEditeur + '"class="uk-card-footer uk-text-center">'
                     + '</div></div></div></div></li>'))
                       $('#card-footer-editeur' + editeurs[i].idEditeur)
-                      .append($('<a class="uk-icon-button  uk-margin-small-right lien" uk-icon="pencil" uk-toggle></a>'))
+                      .append($('<a class="uk-icon-button uk-margin-small-right" uk-icon="pencil" id="btn_modifEd'+ editeurs[i].idEditeur + '"></a>'))
+                      $("#btn_modifEd" + editeurs[i].idEditeur).on("click", function() {
+                      modifEditeur(editeurs[i].idEditeur)
+                      });
                       $('#card-footer-editeur' + editeurs[i].idEditeur)
                       .append($('<a class="uk-icon-button  uk-margin-small-right lien" uk-icon="trash" uk-toggle id="btn_delEd' + editeurs[i].idEditeur + '"></a>'))
                       $("#btn_delEd" + editeurs[i].idEditeur).on("click", function() {
@@ -331,6 +334,57 @@ $(function() {
         refreshJeuList()
         $("#currentJeu").empty();
         alert('Jeu modifié');
+      },
+      error: function (err) {
+        alert('Erreur');
+        console.log(err)
+      }
+    });
+  }
+
+
+  function modifEditeur(idEditeur) {
+    $.ajax({
+      url: "http://localhost:5000/editeurs/" + idEditeur,
+      type: "GET",
+      dataType: "json",
+      success: function (editeur) {
+        $("#currentEditeur").empty();
+        $("#currentJeu").empty();
+        $("#currentEditeur")
+        .append($('<div class="container currentEditeur uk-margin"><form class="uk-form-horizontal">'))
+
+        .append($('<div><label class="uk-form-label uk-label uk-width-1-4 uk-text-center" for="form-horizontal-text">Nom du éditeur</label><div class="uk-form-controls"><input class="uk-input uk-width-1-2 nomEditeurUp"  id="form-horizontal-text" type="text" placeholder="Riot Games, Epic Games, ..." value="'+editeur.nomEditeur+'"></div></div>'))
+        .append($('<div class="uk-margin-medium"><label class="uk-form-label uk-label uk-width-1-4 uk-text-center" for="form-horizontal-text">Année de création</label><div class="uk-form-controls"><input class="uk-input uk-width-1-2 anneeCreationUp" id="form-horizontal-text" type="number" value="'+editeur.anneeCreation+'"></div></div>'))
+        .append($('<div class="uk-margin-medium"><label class="uk-form-label uk-label uk-width-1-4 uk-text-center" for="form-horizontal-text">Logo de l\'éditeur</label><div class="uk-form-controls"><input class="uk-input uk-width-1-2 logoEditeurUp" id="form-horizontal-text" type="text" placeholder="URL logo" value="'+editeur.logoEditeur+'"></div></div>'))
+
+        .append($('<span><input type="button" class="uk-button uk-button-primary" value="Modifier l\'éditeur"><br></span>').on("click",function(){
+          updateEditeur(editeur.idEditeur);
+        } ))
+        .append($('</form></div>'));
+      },
+      error: function (req, status, err) {
+        console.log("Erreur lors du chargement de la modif de l'éditeur.");
+      }
+    });
+  }
+
+  function updateEditeur(idEditeur) {
+    var editeur = new Editeur(
+      $("#currentEditeur .nomEditeurUp").val(),
+      $("#currentEditeur .anneeCreationUp").val(),
+      $("#currentEditeur .logoEditeurUp").val(),
+    );
+    $.ajax({
+      url: "http://localhost:5000/editeurs/" + idEditeur,
+      type: 'PUT',
+      contentType: 'application/json',
+      data: JSON.stringify(editeur),
+      dataType: 'json',
+      success: function (msg) {
+        refreshEditeurList()
+        $("#currentEditeur").empty();
+        alert('Editeur modifié');
       },
       error: function (err) {
         alert('Erreur');
