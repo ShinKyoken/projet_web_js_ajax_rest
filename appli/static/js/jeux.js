@@ -120,8 +120,8 @@ $(function() {
                + '<div class="uk-margin-medium"><label class="uk-form-label uk-width-1-2 uk-label uk-text-center" for="form-horizontal-text">Genre du Jeu</label><div class="uk-form-controls"><input class="uk-input nomGenre" id="form-horizontal-text" type="text" placeholder="MOBA, Survie, ...  "></div></div>'
                + '</div>'))
               .append($('<div class="uk-column-1-2">'
-               + '<div class="uk-margin-medium"><label class="uk-form-label uk-width-1-2 uk-label uk-text-center" for="form-horizontal-text">Icone du Jeu</label><div class="uk-form-controls"><input class="uk-input iconeJeu" id="form-horizontal-text" type="text" placeholder="Url de l icone ..."></div></div>'
-               + '<div class="uk-margin-medium"><label class="uk-form-label uk-width-1-2 uk-label uk-text-center" for="form-horizontal-text">Image du Jeu</label><div class="uk-form-controls"><input class="uk-input imageduJeu" id="form-horizontal-text" type="text" placeholder="Url de l image ..."></div></div>'
+               + '<div class="uk-margin-medium"><label class="uk-form-label uk-width-1-2 uk-label uk-text-center" for="form-horizontal-text">Icone du Jeu</label><div class="uk-form-controls"><input class="uk-input iconeJeu" id="form-horizontal-text" type="text" placeholder="Url de l\'icone ..."></div></div>'
+               + '<div class="uk-margin-medium"><label class="uk-form-label uk-width-1-2 uk-label uk-text-center" for="form-horizontal-text">Image du Jeu</label><div class="uk-form-controls"><input class="uk-input imageduJeu" id="form-horizontal-text" type="text" placeholder="Url de l\'image ..."></div></div>'
                + '</div>'))
               .append($('<div class="uk-column-1-2">'
                + '<div class="uk-margin-medium"><label class="uk-form-label uk-width-1-2 uk-label uk-text-center" for="form-horizontal-text">Trailer du Jeu</label><div class="uk-form-controls"><input class="uk-input urlTrailer" id="form-horizontal-text" type="text" placeholder="Url du trailer ..."></div></div>'
