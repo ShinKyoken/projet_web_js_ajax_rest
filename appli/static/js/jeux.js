@@ -19,7 +19,20 @@ $(function() {
                     + '<a href="#modal-media-youtube-' + jeux[i].idJeu + '" class="uk-icon-button  uk-margin-small-right" uk-icon="youtube" uk-toggle></a>'
                     + '<div id="modal-media-youtube-' + jeux[i].idJeu + '" class="uk-flex-top" uk-modal><div class="uk-modal-dialog uk-width-auto uk-margin-auto-vertical"><button class="uk-modal-close-outside" type="button" uk-close></button><iframe width="560" height="315" src="//www.youtube.com/embed/' + jeux[i].urlTrailer + '" frameborder="0" allowfullscreen uk-video></iframe></div></div></div></div></div></li>'))
                     $('#card-footer-jeu' + jeux[i].idJeu)
-                    .append($('<a class="uk-icon-button uk-margin-small-right" uk-icon="pencil"></a>'))
+                    .append($('<a class="uk-icon-button uk-margin-small-right" uk-icon="pencil" id="btn_modif'+ jeux[i].idJeu + '"></a>'))
+                    $("#btn_modif" + jeux[i].idJeu).on("click", function() {
+                      formJeu();
+                      $("#currentJeu .nomJeu").val(jeux[i].nomJeu),
+                      console.log(jeux[i].nomJeu);
+                      $("#currentJeu .nomGenre").val(jeux[i].nomGenre),
+                      $("#currentJeu .anneeJeu").val(jeux[i].anneeJeu),
+                      $("#currentJeu .nomEditeur").val(jeux[i].nomEditeur),
+                      $("#currentJeu .descriptionJeu").val(jeux[i].description),
+                      $("#currentJeu .iconeJeu").val(jeux[i].iconeJeu),
+                      $("#currentJeu .imageJeu").val(jeux[i].imageJeu),
+                      $("#currentJeu .urlTrailer").val(jeux[i].urlTrailer)
+
+                    });
                     $('#card-footer-jeu' + jeux[i].idJeu)
                     .append($('<a class="uk-icon-button uk-margin-small-right" uk-icon="trash" id="btn_del' + jeux[i].idJeu + '"></a>'))
                     $("#btn_del" + jeux[i].idJeu).on("click", function() {
@@ -111,12 +124,12 @@ $(function() {
               listeEditeurs += '<option>' + editeurs[i].nomEditeur + '</option>';
             }
           }
-          $("#currentJeu").empty();
+          // $("#currentJeu").empty();
           $("#currentEditeur").empty();
           $("#currentJeu")
               .append($('<div class="container currentJeu uk-margin"><form class="uk-form-horizontal">'))
               .append($('<div class="uk-column-1-2">'
-               + '<div><label class="uk-form-label uk-label uk-width-1-2 uk-text-center" for="form-horizontal-text">Nom du Jeu</label><div class="uk-form-controls"><input class="uk-input nomJeu"  id="form-horizontal-text" type="text" placeholder="Minecraft, League of Legends, ..."></div></div>'
+               + '<div><label class="uk-form-label uk-label uk-width-1-2 uk-text-center" for="form-horizontal-text">Nom du Jeu</label><div class="uk-form-controls"><input class="uk-input nomJeu"  id="form-horizontal-text" type="text" placeholder="" value=""></div></div>'
                + '<div class="uk-margin-medium"><label class="uk-form-label uk-width-1-2 uk-label uk-text-center" for="form-horizontal-text">Genre du Jeu</label><div class="uk-form-controls"><input class="uk-input nomGenre" id="form-horizontal-text" type="text" placeholder="MOBA, Survie, ...  "></div></div>'
                + '</div>'))
               .append($('<div class="uk-column-1-2">'
@@ -210,15 +223,10 @@ $(function() {
       });
     }
 
-    function details(event){
-        $("#currentJeu").empty();
-        formTask();
-        fillFormTask(event.data);
-        }
-
     function fillFormJeu(jeu){
-      formJeu()
+      formJeu();
       $("#currentJeu .nomJeu").val(jeu.nomJeu),
+      console.log(jeu.nomJeu);
       $("#currentJeu .nomGenre").val(jeu.nomGenre),
       $("#currentJeu .anneeJeu").val(jeu.anneeJeu),
       $("#currentJeu .nomEditeur").val(jeu.nomEditeur),
