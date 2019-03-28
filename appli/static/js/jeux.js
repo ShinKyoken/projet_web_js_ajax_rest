@@ -18,7 +18,7 @@ $(function() {
                     + '<div id="card-footer-jeu' + jeux[i].idJeu + '" class="uk-card-footer uk-text-center"><a class="uk-icon-button uk-margin-small-right"  href="#modal-sections-'+ jeux[i].idJeu + '" uk-icon="plus-circle" uk-toggle></a><div id="modal-sections-'+ jeux[i].idJeu +'" uk-modal><div class="uk-modal-dialog"><button class="uk-modal-close-default" type="button" uk-close></button><div class="uk-modal-header"><h2 class="uk-modal-title uk-text-center">' + jeux[i].nomJeu +'</h2></div>'
                     + '<div class="uk-modal-body"><img class="uk-align-center" width="300" height="500"src="' + jeux[i].imageJeu + '"/><p>' + jeux[i].descriptionJeu + '</p></div><div class="uk-modal-footer uk-text-right"><button class="uk-button uk-button-default uk-modal-close" type="button">retour</button></div></div></div>'
                     + '<a href="#modal-media-youtube-' + jeux[i].idJeu + '" class="uk-icon-button  uk-margin-small-right" uk-icon="youtube" uk-toggle></a>'
-                    + '<div id="modal-media-youtube-' + jeux[i].idJeu + '" class="uk-flex-top" uk-modal><div class="uk-modal-dialog uk-width-auto uk-margin-auto-vertical"><button class="uk-modal-close-outside" type="button" uk-close></button><iframe width="560" height="315" src="//www.youtube.com/embed/' + jeux[i].urlTrailer + '" frameborder="0" allowfullscreen uk-video></iframe></div></div></div></div></div></li>'))
+                    + '<div id="modal-media-youtube-' + jeux[i].idJeu + '" class="uk-flex-top" uk-modal><div class="uk-modal-dialog uk-width-auto uk-margin-auto-vertical"><button class="uk-modal-close-outside" type="button" uk-close></button><iframe width="560" height="315" src="//www.youtube.com/embed/' + getId(jeux[i].urlTrailer) + '" frameborder="0" allowfullscreen uk-video></iframe></div></div></div></div></div></li>'))
                     $('#card-footer-jeu' + jeux[i].idJeu)
                     .append($('<a class="uk-icon-button uk-margin-small-right" uk-icon="pencil" id="btn_modif'+ jeux[i].idJeu + '"></a>'))
                     $("#btn_modif" + jeux[i].idJeu).on("click", function() {
@@ -180,7 +180,7 @@ $(function() {
         $("#currentJeu .descriptionJeu").val(),
         $("#currentJeu .iconeJeu").val(),
         $("#currentJeu .imageduJeu").val(),
-        getId($("#currentJeu .urlTrailer").val())
+        $("#currentJeu .urlTrailer").val()
       );
       $.ajax({
         url : "http://localhost:5000/jeux",
@@ -368,7 +368,7 @@ $(function() {
       $("#currentJeu .descriptionJeuUp").val(),
       $("#currentJeu .iconeJeuUp").val(),
       $("#currentJeu .imageduJeuUp").val(),
-      getId($("#currentJeu .urlTrailerUp").val())
+      $("#currentJeu .urlTrailerUp").val()
     );
     $.ajax({
       url: "http://localhost:5000/jeux/" + idJeu,
